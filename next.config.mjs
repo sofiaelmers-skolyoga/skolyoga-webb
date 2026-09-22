@@ -2,7 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["skolyoga.se", "img.youtube.com", "instagram.com"],
+    remotePatterns: [
+      { protocol: "https", hostname: "skolyoga.se" },
+      { protocol: "https", hostname: "**.skolyoga.se" },
+      { protocol: "https", hostname: "img.youtube.com" },
+      { protocol: "https", hostname: "i.ytimg.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
+    ],
   },
 };
 
