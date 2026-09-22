@@ -17,6 +17,8 @@ dist/
 # Misc
 .DS_Store
 *.pem
+*.log
+
 
 # Local env files
 .env*.local
