@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, Suspense } from "react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { Lock, Mail, User, School, AlertCircle, CheckCircle2, ArrowRight } from "lucide-react";
+import { Lock, Mail, User, School, AlertCircle, CheckCircle2, Smartphone, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 function LoginContent() {
@@ -21,9 +22,9 @@ function LoginContent() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [school, setSchool] = useState("");
-  const [role, setRole] = useState<"teacher" | "school_admin">("teacher");
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -39,17 +40,17 @@ function LoginContent() {
       case "auth/invalid-credential":
         return "Felaktig e-postadress eller lösenord. Försök igen.";
       case "auth/email-already-in-use":
-        return "E-postadressen är redan registrerad. Logga in istället eller klicka på Glömt lösenord.";
+        return "E-postadressen är redan registrerad. Logga in eller klicka på Glömt lösenord.";
       case "auth/weak-password":
         return "Lösenordet är för svagt. Det måste innehålla minst 6 tecken.";
       case "auth/invalid-email":
         return "Ange en giltig e-postadress.";
       case "auth/too-many-requests":
-        return "För många misslyckade försök. Kontot är tillfälligt låst för din säkerhet. Försök igen om en stund eller återställ lösenordet.";
+        return "För många misslyckade försök. Kontot är tillfälligt spärrat för din säkerhet. Försök igen om en stund eller återställ lösenordet.";
       case "auth/popup-closed-by-user":
         return "Inloggningen med Google avbröts.";
       default:
-        return err?.message || "Ett oväntat fel uppstod vid inloggning. Försök igen.";
+        return err?.message || "Ett fel uppstod vid inloggning. Kontrollera dina uppgifter och försök igen.";
     }
   };
 
@@ -71,6 +72,15 @@ function LoginContent() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (password.length < 6) {
+      setErrorMessage("Lösenordet måste innehålla minst 6 tecken.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setErrorMessage("Lösenorden matchar inte.");
+      return;
+    }
+
     setIsLoading(true);
     setErrorMessage(null);
     setSuccessMessage(null);
@@ -78,7 +88,7 @@ function LoginContent() {
     try {
       await registerWithEmail(email, password, name, school);
       setSuccessMessage(
-        "Ditt konto har skapats! Du kan nu logga in med samma uppgifter både här på hemsidan och i Skolyoga-appen."
+        "🌸 Ditt konto har skapats! Ett verifieringsmejl har skickats till " + email + ". Klicka på länken i mailet (kontrollera även skräpposten) och logga sedan in. Samma uppgifter fungerar direkt i Skolyoga-appen!"
       );
       setActiveTab("login");
     } catch (err: any) {
@@ -104,7 +114,7 @@ function LoginContent() {
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      setErrorMessage("Vänligen ange din e-postadress ovan.");
+      setErrorMessage("Vänligen ange din e-postadress.");
       return;
     }
     setIsLoading(true);
@@ -114,7 +124,7 @@ function LoginContent() {
     try {
       await resetPassword(email);
       setSuccessMessage(
-        `Ett återställningsmejl har skickats till ${email}. Kontrollera även skräpposten.`
+        `Ett återställningsmejl har skickats till ${email}. Kontrollera din inkorg och skräppost.`
       );
     } catch (err: any) {
       setErrorMessage(getSwedishErrorMessage(err));
@@ -124,35 +134,53 @@ function LoginContent() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-16">
+    <div className="max-w-md mx-auto px-4 py-12 md:py-16">
       
       {/* Brand Icon Header */}
-      <div className="text-center mb-8">
-        <div className="w-12 h-12 rounded-2xl bg-brand-coral flex items-center justify-center text-white font-bold text-2xl mx-auto shadow-md mb-3">
-          S
+      <div className="text-center mb-6">
+        <div className="relative w-16 h-16 mx-auto mb-3">
+          <Image
+            src="/images/emblem_turquoise.png"
+            alt="Skolyoga logotyp symbol"
+            width={64}
+            height={64}
+            className="w-full h-full object-contain"
+            priority
+          />
         </div>
-        <h1 className="text-2xl font-bold text-brand-dark">
+        <h1 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark tracking-wide">
           {activeTab === "login" && "Logga in på Skolyoga"}
           {activeTab === "register" && "Skapa ett konto"}
           {activeTab === "forgot" && "Återställ lösenord"}
         </h1>
-        <p className="text-xs text-stone-500 mt-1">
-          Samma inloggning används både på hemsidan och i Skolyoga-appen
+        <p className="text-xs text-brand-darkGrey mt-1 max-w-sm mx-auto">
+          Ett gemensamt konto för både webbplatsen och Skolyoga-appen i mobilen
         </p>
+      </div>
+
+      {/* App integration note */}
+      <div className="mb-6 p-3.5 rounded-2xl bg-white border border-[#E3DFC9] flex items-center gap-3 shadow-sm">
+        <div className="w-9 h-9 rounded-xl bg-brand-dustyTurquoise/20 flex items-center justify-center shrink-0">
+          <Smartphone className="w-4 h-4 text-brand-dustyTurquoise" />
+        </div>
+        <div className="text-[11px] text-brand-dark leading-tight">
+          <strong className="block text-xs font-semibold text-brand-dark">Synkad med Skolyoga-appen</strong>
+          Dina sparade övningar och progression är tillgängliga överallt.
+        </div>
       </div>
 
       {/* Tabs (Hidden on forgot view) */}
       {activeTab !== "forgot" && (
-        <div className="flex rounded-xl bg-stone-200/70 p-1 mb-6">
+        <div className="flex rounded-2xl bg-[#EBE8DC] p-1 mb-6">
           <button
             onClick={() => {
               setActiveTab("login");
               setErrorMessage(null);
             }}
-            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-colors ${
+            className={`flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all ${
               activeTab === "login"
                 ? "bg-white text-brand-dark shadow-sm"
-                : "text-stone-600 hover:text-brand-dark"
+                : "text-brand-darkGrey hover:text-brand-dark"
             }`}
           >
             Logga in
@@ -162,10 +190,10 @@ function LoginContent() {
               setActiveTab("register");
               setErrorMessage(null);
             }}
-            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-colors ${
+            className={`flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all ${
               activeTab === "register"
                 ? "bg-white text-brand-dark shadow-sm"
-                : "text-stone-600 hover:text-brand-dark"
+                : "text-brand-darkGrey hover:text-brand-dark"
             }`}
           >
             Skapa nytt konto
@@ -182,16 +210,16 @@ function LoginContent() {
       )}
 
       {successMessage && (
-        <div className="mb-4 p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-start gap-2.5 leading-relaxed">
+        <div className="mb-4 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-start gap-2.5 leading-relaxed">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
           <span>{successMessage}</span>
         </div>
       )}
 
       {/* Card Form */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm space-y-5">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E3DFC9] shadow-sm space-y-5">
         
-        {/* Google Inloggning */}
+        {/* Google Login */}
         {activeTab !== "forgot" && (
           <>
             <button
@@ -223,7 +251,7 @@ function LoginContent() {
 
             <div className="relative flex items-center justify-center">
               <div className="border-t border-stone-200 w-full"></div>
-              <span className="bg-white px-3 text-[11px] text-stone-400 uppercase tracking-wider">
+              <span className="bg-white px-3 text-[11px] text-brand-darkGrey uppercase tracking-wider">
                 eller med e-post
               </span>
             </div>
@@ -234,18 +262,18 @@ function LoginContent() {
         {activeTab === "forgot" ? (
           <form onSubmit={handleForgotPassword} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">
+              <label className="block text-xs font-semibold text-brand-dark mb-1">
                 E-postadress
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-brand-darkGrey absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="namn@skola.se"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-coral"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-sand border border-[#E3DFC9] text-sm text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dustyPurple"
                 />
               </div>
             </div>
@@ -253,9 +281,9 @@ function LoginContent() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 rounded-full bg-brand-coral text-white font-semibold text-sm shadow-md hover:bg-[#cf4f3d] transition-colors disabled:opacity-50"
+              className="w-full py-3 rounded-full bg-brand-dustyPurple text-white font-semibold text-sm shadow-md hover:bg-[#781b61] transition-all disabled:opacity-50"
             >
-              {isLoading ? "Skickar återställningsmejl..." : "Skicka återställningslänk"}
+              {isLoading ? "Skickar..." : "Skicka återställningslänk"}
             </button>
 
             <div className="text-center pt-2">
@@ -266,7 +294,7 @@ function LoginContent() {
                   setErrorMessage(null);
                   setSuccessMessage(null);
                 }}
-                className="text-xs text-stone-500 hover:text-brand-dark"
+                className="text-xs text-brand-darkGrey hover:text-brand-dark underline"
               >
                 Tillbaka till inloggning
               </button>
@@ -281,34 +309,34 @@ function LoginContent() {
             {activeTab === "register" && (
               <>
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
-                    Ditt namn
+                  <label className="block text-xs font-semibold text-brand-dark mb-1">
+                    Ditt för- och efternamn
                   </label>
                   <div className="relative">
-                    <User className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <User className="w-4 h-4 text-brand-darkGrey absolute left-3.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="För- och efternamn"
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-coral"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-sand border border-[#E3DFC9] text-sm text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dustyPurple"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-brand-dark mb-1">
                     Skola / Kommun
                   </label>
                   <div className="relative">
-                    <School className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <School className="w-4 h-4 text-brand-darkGrey absolute left-3.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       value={school}
                       onChange={(e) => setSchool(e.target.value)}
                       placeholder="t.ex. Paradisskolan, Trollhättan"
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-coral"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-sand border border-[#E3DFC9] text-sm text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dustyPurple"
                     />
                   </div>
                 </div>
@@ -316,25 +344,25 @@ function LoginContent() {
             )}
 
             <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-1">
+              <label className="block text-xs font-semibold text-brand-dark mb-1">
                 E-postadress
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-brand-darkGrey absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="namn@skola.se"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-coral"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-sand border border-[#E3DFC9] text-sm text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dustyPurple"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-semibold text-stone-700">
+                <label className="block text-xs font-semibold text-brand-dark">
                   Lösenord
                 </label>
                 {activeTab === "login" && (
@@ -345,29 +373,48 @@ function LoginContent() {
                       setErrorMessage(null);
                       setSuccessMessage(null);
                     }}
-                    className="text-[11px] text-brand-coral hover:underline"
+                    className="text-[11px] text-brand-dustyPurple hover:underline font-medium"
                   >
                     Glömt lösenord?
                   </button>
                 )}
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-brand-darkGrey absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Minst 6 tecken"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-coral"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-sand border border-[#E3DFC9] text-sm text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dustyPurple"
                 />
               </div>
             </div>
 
+            {activeTab === "register" && (
+              <div>
+                <label className="block text-xs font-semibold text-brand-dark mb-1">
+                  Bekräfta lösenord
+                </label>
+                <div className="relative">
+                  <Lock className="w-4 h-4 text-brand-darkGrey absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Upprepa lösenordet"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-sand border border-[#E3DFC9] text-sm text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dustyPurple"
+                  />
+                </div>
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 rounded-full bg-brand-coral text-white font-semibold text-sm shadow-md hover:bg-[#cf4f3d] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-full bg-brand-dustyPurple text-white font-semibold text-sm shadow-md hover:bg-[#781b61] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <span>Vänta...</span>
@@ -379,9 +426,9 @@ function LoginContent() {
         )}
 
         {/* Quick Demo Login Option */}
-        <div className="pt-4 border-t border-stone-100 text-center space-y-2">
-          <span className="text-[11px] text-stone-400 font-medium uppercase tracking-wider">
-            Snabbtest utan konto
+        <div className="pt-4 border-t border-[#E3DFC9] text-center space-y-2">
+          <span className="text-[11px] text-brand-darkGrey font-medium uppercase tracking-wider">
+            Snabbtest utan inloggning
           </span>
           <div className="flex gap-2">
             <button
@@ -390,7 +437,7 @@ function LoginContent() {
                 loginDemo("teacher");
                 router.push("/mina-favoriter");
               }}
-              className="flex-1 py-2 px-3 rounded-xl border border-stone-200 text-stone-700 text-xs font-medium hover:bg-stone-50"
+              className="flex-1 py-2 px-3 rounded-xl border border-[#E3DFC9] text-brand-dark text-xs font-medium hover:bg-brand-sand transition-colors"
             >
               Provklicka som Lärare
             </button>
@@ -400,7 +447,7 @@ function LoginContent() {
                 loginDemo("school_admin");
                 router.push("/mina-favoriter");
               }}
-              className="flex-1 py-2 px-3 rounded-xl border border-stone-200 text-stone-700 text-xs font-medium hover:bg-stone-50"
+              className="flex-1 py-2 px-3 rounded-xl border border-[#E3DFC9] text-brand-dark text-xs font-medium hover:bg-brand-sand transition-colors"
             >
               Provklicka som Rektor
             </button>
@@ -415,7 +462,7 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="p-12 text-center text-stone-500">Laddar inloggningsformulär...</div>}>
+    <Suspense fallback={<div className="p-12 text-center text-brand-darkGrey">Laddar inloggningsformulär...</div>}>
       <LoginContent />
     </Suspense>
   );

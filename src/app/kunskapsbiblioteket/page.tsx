@@ -42,7 +42,6 @@ function KunskapsbibliotekContent() {
 
       // Duration match
       if (selectedDuration !== "Alla längder") {
-        // e.g. "3 min"
         if (!ex.duration_tag.toLowerCase().includes(selectedDuration.toLowerCase())) {
           return false;
         }
@@ -75,14 +74,14 @@ function KunskapsbibliotekContent() {
       
       {/* Header Banner */}
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-teal/20 text-teal-900 text-xs font-semibold mb-4">
-          <BookOpen className="w-3.5 h-3.5 text-brand-teal" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-dustyTurquoise/20 text-[#1B6465] border border-brand-dustyTurquoise/40 text-xs font-semibold mb-4">
+          <BookOpen className="w-3.5 h-3.5 text-brand-dustyTurquoise" />
           <span>125 digitala övningar för skolan</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-dark tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark tracking-tight">
           Kunskapsbiblioteket
         </h1>
-        <p className="mt-4 text-base sm:text-lg text-stone-600 leading-relaxed">
+        <p className="mt-4 text-base sm:text-lg text-brand-darkGrey leading-relaxed">
           Här hittar du korta, evidensbaserade övningar anpassade för att köras direkt i klassrummet. 
           Filtrera på årskurs, önskad längd eller anpassning för att hitta rätt övning för stunden.
         </p>
@@ -117,17 +116,17 @@ function KunskapsbibliotekContent() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 bg-white rounded-3xl border border-stone-200 p-8">
-          <div className="w-16 h-16 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center mx-auto mb-4">
+        <div className="text-center py-20 bg-white rounded-3xl border border-[#E3DFC9] p-8 shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-brand-sand text-brand-darkGrey flex items-center justify-center mx-auto mb-4">
             <BookOpen className="w-8 h-8" />
           </div>
-          <h3 className="text-xl font-bold text-brand-dark mb-2">Inga övningar matchade dina filter</h3>
-          <p className="text-sm text-stone-500 max-w-md mx-auto mb-6">
+          <h3 className="text-xl font-bold font-cardo text-brand-dark mb-2">Inga övningar matchade dina filter</h3>
+          <p className="text-sm text-brand-darkGrey max-w-md mx-auto mb-6">
             Prova att justera sökord eller nollställa något av filtren för att hitta vad du söker.
           </p>
           <button
             onClick={handleReset}
-            className="px-6 py-2.5 rounded-full bg-brand-coral text-white text-sm font-semibold hover:bg-[#cf4f3d] transition-colors"
+            className="px-6 py-2.5 rounded-full bg-brand-dustyPurple text-white text-sm font-semibold hover:bg-[#781b61] transition-colors shadow-sm"
           >
             Återställ alla filter
           </button>
@@ -146,7 +145,7 @@ function KunskapsbibliotekContent() {
 
 export default function KunskapsbiblioteketPage() {
   return (
-    <Suspense fallback={<div className="p-12 text-center text-stone-500">Laddar kunskapsbiblioteket...</div>}>
+    <Suspense fallback={<div className="p-12 text-center text-brand-darkGrey">Laddar kunskapsbiblioteket...</div>}>
       <KunskapsbibliotekContent />
     </Suspense>
   );

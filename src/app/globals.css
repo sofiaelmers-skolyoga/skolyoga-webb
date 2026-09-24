@@ -1,18 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #faf8f5;
-  --foreground: #22252a;
+  --background: #F6F5EE;
+  --foreground: #2A2A2A;
+  --brand-dark-grey: #6F6F6E;
+  --brand-sand: #F6F5EE;
+  --brand-yellow: #FFE271;
+  --brand-pink: #E29B9D;
+  --brand-purple: #8C2272;
+  --brand-turquoise: #70B9BA;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, .font-cardo {
+  font-family: 'Cardo', Georgia, Cambria, serif;
 }
 
 /* Custom scrollbar */
@@ -21,12 +33,12 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1ede6;
+  background: #EBE8DD;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d4cdc3;
+  background: #C4BEB1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #b8af9f;
+  background: #AFA898;
 }

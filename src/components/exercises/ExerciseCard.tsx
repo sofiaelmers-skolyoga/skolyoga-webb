@@ -16,26 +16,26 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
   const { user, isFavorite, toggleFavorite } = useAuth();
   const favorited = isFavorite(exercise.id);
 
-  // Category badge colors
+  // Category badge colors from official visual manual
   const getCategoryColor = (cat: string) => {
     switch (cat) {
       case "Stresshantering":
-        return "bg-[#e29b9d]/30 text-[#8c2272] border-[#e29b9d]/50";
+        return "bg-brand-dustyPink/25 text-brand-dustyPurple border-brand-dustyPink/50";
       case "Fokus":
-        return "bg-[#ffe271]/40 text-[#92400e] border-[#ffe271]";
+        return "bg-brand-warmYellow/35 text-[#735100] border-brand-warmYellow/70";
       case "Studieteknik":
-        return "bg-[#70b9ba]/30 text-[#0f766e] border-[#70b9ba]/50";
+        return "bg-brand-dustyTurquoise/25 text-[#1B6465] border-brand-dustyTurquoise/50";
       case "Trygghet":
-        return "bg-[#e0614f]/20 text-[#b91c1c] border-[#e0614f]/40";
+        return "bg-brand-dustyPink/20 text-[#8C2272] border-brand-dustyPink/40";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-200";
+        return "bg-stone-100 text-stone-700 border-stone-200";
     }
   };
 
   const isLocked = exercise.is_protected && !user;
 
   return (
-    <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-[#e9e3d8] shadow-sm hover:shadow-md transition-all duration-200">
+    <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-[#E3DFC9] shadow-sm hover:shadow-md transition-all duration-200">
       
       {/* Thumbnail Container */}
       <div 
@@ -50,14 +50,14 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-brand-sandDark text-brand-muted">
-            <Play className="w-12 h-12 opacity-50" />
+          <div className="w-full h-full flex items-center justify-center bg-brand-sand text-brand-darkGrey">
+            <Play className="w-12 h-12 opacity-40 text-brand-dustyPurple" />
           </div>
         )}
 
         {/* Play Overlay */}
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 flex items-center justify-center transition-colors">
-          <div className="w-12 h-12 rounded-full bg-white/95 text-brand-coral flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+          <div className="w-12 h-12 rounded-full bg-white/95 text-brand-dustyPurple flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
             <Play className="w-5 h-5 ml-0.5 fill-current" />
           </div>
         </div>
@@ -70,7 +70,7 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
 
         {/* Lock indicator for non-logged in users */}
         {isLocked && (
-          <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md bg-amber-500/90 text-white text-xs font-medium flex items-center gap-1 shadow">
+          <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md bg-brand-dustyPurple text-white text-xs font-medium flex items-center gap-1 shadow">
             <Lock className="w-3 h-3" />
             <span>Konto krävs</span>
           </div>
@@ -87,7 +87,7 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
         >
           <Heart
             className={`w-4 h-4 transition-colors ${
-              favorited ? "fill-brand-coral text-brand-coral" : "text-gray-600 hover:text-brand-coral"
+              favorited ? "fill-brand-dustyPink text-brand-dustyPink" : "text-gray-500 hover:text-brand-dustyPink"
             }`}
           />
         </button>
@@ -105,31 +105,31 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
             {exercise.tweak_tags.map((tweak) => (
               <span 
                 key={tweak} 
-                className="px-2 py-0.5 text-[11px] font-medium rounded-full bg-[#faf8f5] text-stone-700 border border-stone-200"
+                className="px-2 py-0.5 text-[11px] font-medium rounded-full bg-brand-sand text-stone-700 border border-[#E3DFC9]"
               >
                 {tweak}
               </span>
             ))}
           </div>
 
-          {/* Title */}
+          {/* Title in Cardo */}
           <h3 
             onClick={() => onSelect(exercise)}
-            className="text-lg font-bold text-brand-dark group-hover:text-brand-coral transition-colors cursor-pointer line-clamp-1"
+            className="text-lg font-bold font-cardo text-brand-dark group-hover:text-brand-dustyPurple transition-colors cursor-pointer line-clamp-1"
           >
             {exercise.title}
           </h3>
 
-          {/* Description snippet if any */}
+          {/* Description snippet */}
           {exercise.description && (
-            <p className="text-xs text-brand-muted mt-1.5 line-clamp-2 leading-relaxed">
+            <p className="text-xs text-brand-darkGrey mt-1.5 line-clamp-2 leading-relaxed">
               {exercise.description}
             </p>
           )}
         </div>
 
         {/* Levels / Grades Footer */}
-        <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
+        <div className="mt-4 pt-3 border-t border-[#EBE8DC] flex items-center justify-between text-[11px] text-stone-500">
           <div className="flex flex-wrap gap-1">
             {exercise.level_tags.length > 0 ? (
               exercise.level_tags.map((lvl) => (

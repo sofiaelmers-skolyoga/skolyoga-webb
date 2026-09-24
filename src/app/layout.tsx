@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   description:
     "Evidensbaserade, korta rörelse- och fokusövningar (1–5 minuter) för klassrummet. Skapa trygghet, studiero och självreglering för alla elever.",
   keywords: ["skolyoga", "yoga i skolan", "studiero", "NPF", "fokus i klassrummet", "livsförmågor"],
+  icons: {
+    icon: "/images/emblem_turquoise.png",
+    apple: "/images/app_icon_512.png",
+  },
   openGraph: {
     title: "Skolyoga - Vi utbildar skolpersonal i livsförmågor",
     description: "Korta övningar för klassrummet som främjar studiero och trygghet.",
@@ -26,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sv" className="scroll-smooth">
-      <body className="min-h-screen flex flex-col bg-[#faf8f5] text-[#22252a] antialiased">
+      <body className="min-h-screen flex flex-col bg-brand-sand text-brand-dark antialiased">
         <AuthProvider>
           <Header />
           <main className="flex-1">{children}</main>

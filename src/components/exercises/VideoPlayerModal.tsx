@@ -29,21 +29,21 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
   const isLocked = exercise.is_protected && !user;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
       
       {/* Modal Container */}
       <div 
-        className="relative w-full max-w-4xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-stone-200 flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-4xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#E3DFC9] flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Top Header bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100 bg-[#faf8f5]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#EBE8DC] bg-brand-sand">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-brand-coral/10 text-brand-coral">
+            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-brand-dustyPink/20 text-brand-dustyPurple border border-brand-dustyPink/40">
               {exercise.category}
             </span>
-            <span className="text-xs text-stone-500 font-medium flex items-center gap-1">
+            <span className="text-xs text-brand-darkGrey font-medium flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
               {formatDuration(exercise.duration_tag, exercise.duration_formatted)}
             </span>
@@ -52,11 +52,11 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
           <div className="flex items-center gap-2">
             <button
               onClick={() => toggleFavorite(exercise.id)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-stone-200 hover:border-brand-coral transition-colors"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium border border-[#E3DFC9] hover:border-brand-dustyPurple transition-colors"
             >
               <Heart
                 className={`w-4 h-4 ${
-                  favorited ? "fill-brand-coral text-brand-coral" : "text-stone-500"
+                  favorited ? "fill-brand-dustyPink text-brand-dustyPink" : "text-brand-darkGrey"
                 }`}
               />
               <span>{favorited ? "Sparad i favoriter" : "Spara favorit"}</span>
@@ -64,7 +64,7 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
 
             <button
               onClick={onClose}
-              className="w-8 h-8 rounded-full bg-stone-200/70 hover:bg-stone-300 text-stone-700 flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-full bg-stone-200/80 hover:bg-stone-300 text-stone-700 flex items-center justify-center transition-colors"
               aria-label="Stäng"
             >
               <X className="w-4 h-4" />
@@ -76,20 +76,20 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
         <div className="relative aspect-video w-full bg-black">
           {isLocked ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-stone-900 text-white">
-              <div className="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-brand-warmYellow/20 text-brand-warmYellow flex items-center justify-center mb-4">
                 <Lock className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Denna övning kräver inloggning</h3>
+              <h3 className="text-xl font-bold font-cardo mb-2">Denna övning kräver inloggning</h3>
               <p className="text-sm text-stone-300 max-w-md mb-6 leading-relaxed">
                 Skapa ett kostnadsfritt konto eller logga in med din skolas licens för att få 
-                obegränsad tillgång till alla 125 övningar i klassrummet.
+                obegränsad tillgång till alla 125 övningar i klassrummet. Samma inlogg fungerar i appen!
               </p>
               
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/logga-in"
                   onClick={onClose}
-                  className="px-6 py-2.5 rounded-full bg-brand-coral text-white font-medium text-sm shadow-md hover:bg-[#cf4f3d] transition-colors"
+                  className="px-6 py-2.5 rounded-full bg-brand-dustyPurple text-white font-medium text-sm shadow-md hover:bg-[#781b61] transition-colors"
                 >
                   Logga in / Skapa konto
                 </Link>
@@ -119,13 +119,13 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
         {/* Content Area */}
         <div className="p-6 overflow-y-auto space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <h2 className="text-2xl font-bold text-brand-dark">{exercise.title}</h2>
+            <h2 className="text-2xl font-bold font-cardo text-brand-dark">{exercise.title}</h2>
             
             <div className="flex flex-wrap items-center gap-1.5">
               {exercise.level_tags.map((lvl) => (
                 <span
                   key={lvl}
-                  className="px-2.5 py-1 text-xs font-medium rounded-md bg-stone-100 text-stone-700"
+                  className="px-2.5 py-1 text-xs font-medium rounded-md bg-brand-sand text-stone-700 border border-[#E3DFC9]"
                 >
                   {lvl}
                 </span>
@@ -133,7 +133,7 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
               {exercise.tweak_tags.map((twk) => (
                 <span
                   key={twk}
-                  className="px-2.5 py-1 text-xs font-medium rounded-md bg-teal-50 text-teal-800 border border-teal-200"
+                  className="px-2.5 py-1 text-xs font-medium rounded-md bg-brand-dustyTurquoise/15 text-[#1B6465] border border-brand-dustyTurquoise/30"
                 >
                   {twk}
                 </span>
@@ -142,19 +142,19 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
           </div>
 
           {exercise.description && (
-            <div className="text-sm text-stone-600 leading-relaxed bg-[#faf8f5] p-4 rounded-xl border border-stone-100">
+            <div className="text-sm text-brand-darkGrey leading-relaxed bg-brand-sand p-4 rounded-xl border border-[#E3DFC9]">
               <h4 className="font-semibold text-brand-dark mb-1">Om övningen:</h4>
               <p>{exercise.description}</p>
             </div>
           )}
 
           {/* Teacher Guide Box */}
-          <div className="border border-brand-teal/30 bg-teal-50/40 rounded-xl p-4 text-xs text-stone-700 space-y-2">
+          <div className="border border-brand-dustyTurquoise/40 bg-brand-dustyTurquoise/10 rounded-xl p-4 text-xs text-stone-700 space-y-2">
             <div className="font-bold text-teal-900 flex items-center gap-1.5 text-sm">
-              <Sparkles className="w-4 h-4 text-brand-teal" />
+              <Sparkles className="w-4 h-4 text-brand-dustyTurquoise" />
               <span>Att tänka på i klassrummet</span>
             </div>
-            <ul className="list-disc list-inside space-y-1 text-stone-600">
+            <ul className="list-disc list-inside space-y-1 text-brand-darkGrey">
               <li>Låt eleverna ställa sig bakom stolen eller sitta bekvämt med fötterna i golvet.</li>
               <li>Övningen är utformad för att kunna göras i vanliga skolkläder utan förberedelser.</li>
               <li>Gör övningen tillsammans med klassen för att spegla lugn och samreglering.</li>
