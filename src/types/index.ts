@@ -44,6 +44,7 @@ export interface UserProfile {
   role: 'teacher' | 'school_admin' | 'guest';
   schoolName?: string;
   municipality?: string;
+  emailVerified?: boolean;
 }
 
 export interface Playlist {
