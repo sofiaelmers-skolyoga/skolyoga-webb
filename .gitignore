@@ -29,8 +29,15 @@ dist/
 *.tsbuildinfo
 next-env.d.ts
 
-# Large raw backup exports
+# Large raw backup exports & local scratch folders
 *.xml
+!public/sitemap.xml
 *.tar.gz
 tools/
 .bin/
+service-account*.json
+firebase-key*.json
+Bilder/
+scratch/
+scratch_*.json
+.agents/

@@ -34,7 +34,7 @@ export function ExerciseFilters({
   totalCount,
   filteredCount,
 }: ExerciseFiltersProps) {
-  const categories = ["Alla kategorier", "Stresshantering", "Studieteknik", "Trygghet", "Fokus", "För skolpersonal"];
+  const categories = ["Alla kategorier", "Stresshantering", "Studieteknik", "Trygghet", "Om Skolyoga", "För skolpersonal"];
   const durations = ["Alla längder", "1 min", "3 min", "5 min", "10 min"];
   const grades = ["Alla årskurser", "Förskolan", "Lågstadiet", "Mellanstadiet", "Högstadiet", "Gymnasiet"];
   const tweaks = ["Alla anpassningar", "Sittande", "NPF", "Anpassad skola", "Stress och oro"];
@@ -169,7 +169,7 @@ export function ExerciseFilters({
       {/* Quick category chips */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 text-xs no-scrollbar">
         <span className="text-brand-darkGrey font-medium whitespace-nowrap">Snabbval:</span>
-        {["Fokus", "Stresshantering", "Trygghet", "NPF", "Sittande", "1 min", "3 min"].map((quick) => {
+        {["Studieteknik", "Stresshantering", "Trygghet", "Om Skolyoga", "NPF", "Sittande", "1 min", "3 min"].map((quick) => {
           const isCat = categories.includes(quick);
           const isDur = durations.includes(quick);
           const isTweak = tweaks.includes(quick);

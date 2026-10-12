@@ -2,6 +2,7 @@ export type VideoCategory =
   | 'Stresshantering'
   | 'Studieteknik'
   | 'Trygghet'
+  | 'Om Skolyoga'
   | 'För skolpersonal'
   | 'Fokus'
   | 'Allmänt';
@@ -31,6 +32,7 @@ export interface Exercise {
   duration_formatted: string;
   duration_tag: string;
   category: VideoCategory | string;
+  categories?: string[];
   level_tags: string[];
   tweak_tags: string[];
   is_protected: boolean;
@@ -45,6 +47,7 @@ export interface UserProfile {
   schoolName?: string;
   municipality?: string;
   emailVerified?: boolean;
+  avatarUrl?: string;
 }
 
 export interface Playlist {
@@ -54,3 +57,43 @@ export interface Playlist {
   exerciseIds: string[];
   createdAt: string;
 }
+
+export interface ProgramWeek {
+  id: string;
+  weekNumber: number;
+  title: string;
+  exerciseName: string;
+  classTitle: string;
+  videoUrl?: string;
+  classUrl?: string;
+  pdfUrl?: string;
+  description: string;
+  instructions: string[];
+  durationMinutes: number;
+}
+
+export interface Program {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  durationWeeks: number;
+  icon: string;
+  badge: string;
+  badges?: string[];
+  tags?: string[];
+  difficulty: string;
+  isActive: boolean;
+  weeks: ProgramWeek[];
+}
+
+export interface UserProgress {
+  email: string;
+  completedWeeks: string[];
+  completedExercises: string[];
+  streakDays: number;
+  totalMinutes: number;
+  activeProgramId: string;
+  hasCompletedSurvey?: boolean;
+}
+

@@ -3,215 +3,528 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Sparkles, CheckCircle2, Play, Users, BookOpen, ShieldCheck, Heart, Clock, Smartphone, Star, Check } from "lucide-react";
+import { 
+  ArrowRight, 
+  Sparkles, 
+  Play, 
+  Heart, 
+  Smartphone, 
+  Check, 
+  BookOpen,
+  Award,
+  Brain,
+  TreeDeciduous,
+  Headphones,
+  ExternalLink,
+  FileText
+} from "lucide-react";
 import { getFeaturedExercises } from "@/lib/exercises";
 import { ExerciseCard } from "@/components/exercises/ExerciseCard";
 import { VideoPlayerModal } from "@/components/exercises/VideoPlayerModal";
+import { InstagramFeed } from "@/components/InstagramFeed";
+import { NewsletterSection } from "@/components/NewsletterSection";
 import { Exercise } from "@/types";
+import { useAuth } from "@/context/AuthContext";
 
 export default function HomePage() {
   const featured = getFeaturedExercises();
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
+  const { user } = useAuth();
 
   return (
     <div className="space-y-24 pb-20">
       
-      {/* HERO SECTION */}
-      <section className="relative pt-10 md:pt-16 lg:pt-20 overflow-hidden">
+      {/* HERO SECTION - With authentic background photo from Bilder clearly visible */}
+      <section className="relative pt-16 md:pt-24 lg:pt-28 pb-16 md:pb-24 lg:pb-28 overflow-hidden border-b border-[#2C2724]/40 bg-[#181614] text-white">
         
-        {/* Soft background ambient gradient with graphic profile colors */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[520px] pointer-events-none opacity-50">
-          <div className="absolute top-10 left-1/4 w-96 h-96 bg-brand-dustyPink/25 rounded-full blur-3xl" />
-          <div className="absolute top-16 right-1/4 w-96 h-96 bg-brand-dustyTurquoise/25 rounded-full blur-3xl" />
-          <div className="absolute top-36 left-1/2 -translate-x-1/2 w-80 h-80 bg-brand-warmYellow/30 rounded-full blur-3xl" />
+        {/* Background photo behind hero - Clearly visible, black & white, bright with children's faces centered */}
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="/images/heroes/homepage_photoshoot_maj.jpg"
+            alt="Skolyoga elever i klassrummet från Photoshoot Maj"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[50%_24%] grayscale brightness-[1.10] contrast-[1.05]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/60" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 text-center z-10">
           
           {/* Pill Badge with emblem */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-[#E3DFC9] text-brand-dark text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[#FFE271] text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
             <div className="w-4 h-4 relative shrink-0">
               <Image
                 src="/images/emblem_turquoise.png"
-                alt="Emblem"
+                alt="Mandala emblem"
                 width={16}
                 height={16}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain brightness-200"
               />
             </div>
             <span>Evidensbaserad metod för klassrummet</span>
           </div>
 
-          {/* Heading in Cardo Serif font */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-cardo tracking-tight text-brand-dark max-w-4xl mx-auto leading-[1.18]">
-            Ge eleverna verktyg för <span className="text-brand-dustyPurple underline decoration-brand-dustyPink decoration-2 underline-offset-4">självreglering</span>, fokus och studiero.
+          {/* Heading */}
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold font-cardo tracking-tight text-white max-w-5xl mx-auto leading-[1.12] drop-shadow-md">
+            Förutsättningar för{" "}
+            <span className="text-[#FFE271] underline decoration-[#FFE271] decoration-2 underline-offset-4">
+              lärande
+            </span>{" "}
+            börjar i{" "}
+            <span className="text-[#FFE271] underline decoration-[#FFE271] decoration-2 underline-offset-4">
+              kroppen
+            </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="mt-6 text-lg sm:text-xl text-brand-darkGrey max-w-2xl mx-auto leading-relaxed">
-            Korta, kroppsbaserade övningar (1–5 minuter) som hjälper elever och skolpersonal att 
-            reglera stress och hitta lugn mitt i skoldagen. Ingen tidigare erfarenhet eller ombyte krävs.
+          {/* Subtitle - Short and punchy */}
+          <p className="mt-6 text-lg sm:text-2xl text-stone-100 max-w-3xl mx-auto leading-relaxed font-normal drop-shadow-sm">
+            Korta rörelse- och fokusövningar för klassrummet. Vi ger elever konkreta verktyg för <strong>självledarskap</strong>, <strong>stresshantering</strong> och <strong>studieteknik</strong> direkt vid skolbänken.
           </p>
 
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/kunskapsbiblioteket"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-dustyPurple text-white font-semibold text-base shadow-lg shadow-brand-dustyPurple/20 hover:bg-[#781b61] hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2.5"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-purple text-white font-semibold text-base shadow-xl shadow-brand-purple/40 hover:bg-[#781b61] hover:scale-105 transition-all flex items-center justify-center gap-2.5"
             >
               <Play className="w-4 h-4 fill-white" />
-              <span>Utforska 125 övningar</span>
+              <span>Utforska Kunskapsbiblioteket</span>
+            </Link>
+
+            <Link
+              href="/program"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/95 border border-white/20 text-brand-dark font-semibold text-base hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-lg"
+            >
+              <Sparkles className="w-4 h-4 text-brand-turquoise" />
+              <span>Digitala program</span>
             </Link>
 
             <Link
               href="/utbildningar"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white border border-[#D5D0BE] text-brand-dark font-semibold text-base hover:bg-stone-50 hover:border-brand-darkGrey transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full sm:w-auto px-6 py-4 rounded-full text-white font-semibold text-sm hover:text-[#FFE271] transition-all flex items-center justify-center gap-1.5 drop-shadow-sm"
             >
-              <span>Utbildning för er skola</span>
-              <ArrowRight className="w-4 h-4 text-brand-dustyPurple" />
+              <span>100h Utbildning</span>
+              <ArrowRight className="w-4 h-4 text-[#FFE271]" />
             </Link>
           </div>
 
-          {/* Key Value Stats - Linjer och färgblock */}
-          <div className="mt-16 pt-10 border-t border-[#E3DFC9] grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            <div className="p-4 rounded-2xl bg-white/70 border border-[#EBE8DC]">
-              <div className="text-3xl font-bold font-cardo text-brand-dark">125+</div>
-              <div className="text-xs text-brand-darkGrey font-medium mt-1">Digitala klassrumsövningar</div>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/70 border border-[#EBE8DC]">
-              <div className="text-3xl font-bold font-cardo text-brand-dustyTurquoise">1–5 min</div>
-              <div className="text-xs text-brand-darkGrey font-medium mt-1">Korta pauser i lektionen</div>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/70 border border-[#EBE8DC]">
-              <div className="text-3xl font-bold font-cardo text-brand-dustyPink">F–9 & Gy</div>
-              <div className="text-xs text-brand-darkGrey font-medium mt-1">Anpassat för alla stadier</div>
-            </div>
-            <div className="p-4 rounded-2xl bg-white/70 border border-[#EBE8DC]">
-              <div className="text-3xl font-bold font-cardo text-brand-dustyPurple">NPF-stöd</div>
-              <div className="text-xs text-brand-darkGrey font-medium mt-1">Inkluderande anpassningar</div>
-            </div>
-          </div>
-
         </div>
       </section>
 
-      {/* THREE PILLARS (LIVSFÖRMÅGOR) - Tonplattor enl. grafisk profil */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-xs font-bold uppercase tracking-widest text-brand-dustyPurple mb-2">
-            Metod & Forskning
+      {/* HEMMAYOGA SECTION */}
+      {/* HEMMAYOGA SECTION - Wide & Streamlined */}
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border border-[#E3DFC9] p-8 sm:p-14 shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div className="lg:col-span-8 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-yellow/40 text-brand-dark text-xs font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-brand-purple" />
+                <span>Folkhälsomyndigheten</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark">
+                Hemmayoga – kostnadsfritt stöd vid skolfrånvaro
+              </h2>
+              <p className="text-base sm:text-lg text-brand-darkGrey leading-relaxed max-w-2xl">
+                Ett digitalt 6-veckorsprogram skapat för elever och familjer som behöver sänka stressen och bygga trygghet hemifrån.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-white/80 border border-[#EBE8DC]">
+                  <div className="font-bold text-sm text-brand-dark font-cardo">Kravlöst</div>
+                  <div className="text-xs text-brand-darkGrey mt-1">Deltagande på egna villkor i trygg hemmiljö.</div>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/80 border border-[#EBE8DC]">
+                  <div className="font-bold text-sm text-brand-dark font-cardo">Nervsystemsreglering</div>
+                  <div className="text-xs text-brand-darkGrey mt-1">Pass på 20–30 min och enkla vardagsövningar.</div>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/80 border border-[#EBE8DC]">
+                  <div className="font-bold text-sm text-brand-dark font-cardo">Helt kostnadsfritt</div>
+                  <div className="text-xs text-brand-darkGrey mt-1">Öppet för alla tack vare statligt utvecklingsstöd.</div>
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="pt-3 flex flex-wrap items-center gap-4">
+                <Link
+                  href="/program/yTk3wFhl1s011CoBYPpY"
+                  className="px-8 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm shadow-md hover:bg-[#781b61] transition-all flex items-center gap-2"
+                >
+                  <Play className="w-4 h-4 fill-white" />
+                  <span>Starta Hemmayoga</span>
+                </Link>
+                <Link
+                  href="/testa-en-yogaklass"
+                  className="px-6 py-3.5 rounded-full bg-white border border-[#D5D0BE] text-brand-dark font-semibold text-sm hover:bg-stone-50 transition-all flex items-center gap-2"
+                >
+                  <Play className="w-4 h-4 text-brand-purple" />
+                  <span>Testa en yogaklass</span>
+                </Link>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex justify-center">
+              <div className="relative w-56 sm:w-64 rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+                <Image
+                  src="/images/photos/photo_2.jpg"
+                  alt="Hemmayoga övning"
+                  width={320}
+                  height={520}
+                  className="w-full h-auto object-cover grayscale brightness-[1.05] contrast-[1.05]"
+                />
+              </div>
+            </div>
+
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark">
-            Vad är livsförmågor i skolan?
+        </div>
+      </section>
+
+      {/* STATS & IMPACT SECTION - Wide */}
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="bg-brand-sand rounded-3xl border border-[#E3DFC9] p-8 sm:p-14 text-center space-y-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E3DFC9] text-xs font-bold text-brand-purple uppercase tracking-wider">
+            <span>Vår Räckvidd</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-cardo text-brand-dark max-w-4xl mx-auto">
+            Över 9 200 barn och unga har fått ta del av Skolyoga under 2025
           </h2>
-          <p className="mt-4 text-base text-brand-darkGrey leading-relaxed">
-            Barn och unga förväntas ofta prestera och sitta still – men de har sällan fått lära sig 
-            <em> hur </em> man hanterar stress och reglerar sitt eget nervsystem. Det är där Skolyoga kommer in.
+          <p className="text-base sm:text-lg text-brand-darkGrey max-w-2xl mx-auto leading-relaxed">
+            Läs vår effektrapport för att se hur evidensbaserade mikropauser sänker stress och stärker klassrumsklimatet i skolor över hela Sverige.
+          </p>
+          <div className="pt-2">
+            <a
+              href="/documents/Skolyoga-Effektrapport-2025.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm shadow hover:bg-[#781b61] transition-all"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Läs Effektrapport 2025 (PDF)</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* THREE MODULES: STUDIETEKNIK, STRESSHANTERING, TRYGGHET */}
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
+          <div className="text-xs font-bold uppercase tracking-widest text-brand-purple">
+            Evidensbaserad metod
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark">
+            Tre pelare för återhämtning och kunskap
+          </h2>
+          <p className="text-base sm:text-lg text-brand-darkGrey leading-relaxed">
+            Skolyoga skapar optimala förutsättningar för kunskap och stärker elevernas lärande. Praktiska verktyg som reglerar nervsystemet, ger återhämtning och bygger studiero och trygghet i klassrummet.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           
-          {/* Pillar 1 - Dusty Pink tonplatta */}
-          <div className="bg-white p-8 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="w-14 h-14 rounded-2xl bg-brand-dustyPink/20 text-brand-dustyPurple flex items-center justify-center mb-6">
-              <ShieldCheck className="w-7 h-7 text-brand-dustyPurple" />
+          {/* Module 1: Studieteknik */}
+          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-brand-pink/25 text-brand-purple flex items-center justify-center">
+                <Brain className="w-6 h-6 text-brand-purple" />
+              </div>
+              <h3 className="text-2xl font-bold font-cardo text-brand-dark">Studieteknik</h3>
+              <p className="text-sm text-brand-darkGrey leading-relaxed">
+                Träna hjärnans förmåga att rikta, behålla och skifta fokus med enkla uppmärksamhetsövningar.
+              </p>
+              <ul className="space-y-2 text-sm text-brand-dark pt-2">
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-purple shrink-0" />
+                  <span>Flow & djupfokus</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-purple shrink-0" />
+                  <span>Riktad uppmärksamhet</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-purple shrink-0" />
+                  <span>Mental uthållighet</span>
+                </li>
+              </ul>
             </div>
-            <h3 className="text-2xl font-bold font-cardo text-brand-dark mb-3">Självreglering & Lugn</h3>
-            <p className="text-sm text-brand-darkGrey leading-relaxed">
-              Enkla andnings- och rörelseövningar som aktiverar kroppens broms (det parasympatiska nervsystemet) 
-              och hjälper elever att sänka stressnivån direkt vid bänken.
-            </p>
-            <div className="mt-6 pt-4 border-t border-[#EBE8DC] flex items-center text-xs font-semibold text-brand-dustyPurple">
-              <span>Läs mer om nervsystemet</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
+            <div className="pt-4 border-t border-[#EBE8DC]">
+              <Link href="/metoden#studieteknik" className="text-xs font-semibold text-brand-purple flex items-center gap-1.5 hover:underline">
+                <span>Läs mer om studieteknik</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
-          {/* Pillar 2 - Dusty Turquoise tonplatta */}
-          <div className="bg-white p-8 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="w-14 h-14 rounded-2xl bg-brand-dustyTurquoise/20 text-brand-dustyTurquoise flex items-center justify-center mb-6">
-              <Sparkles className="w-7 h-7 text-brand-dustyTurquoise" />
+          {/* Module 2: Stresshantering */}
+          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-brand-turquoise/20 text-brand-turquoise flex items-center justify-center">
+                <TreeDeciduous className="w-6 h-6 text-brand-turquoise" />
+              </div>
+              <h3 className="text-2xl font-bold font-cardo text-brand-dark">Stresshantering</h3>
+              <p className="text-sm text-brand-darkGrey leading-relaxed">
+                Reglera kroppens stressystem i realtid med medveten andning och återhämtande rörelser.
+              </p>
+              <ul className="space-y-2 text-sm text-brand-dark pt-2">
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-turquoise shrink-0" />
+                  <span>Snabb återhämtning</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-turquoise shrink-0" />
+                  <span>Medveten närvaro i kroppen</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-turquoise shrink-0" />
+                  <span>Nervsystemsreglering</span>
+                </li>
+              </ul>
             </div>
-            <h3 className="text-2xl font-bold font-cardo text-brand-dark mb-3">Fokus & Studieteknik</h3>
-            <p className="text-sm text-brand-darkGrey leading-relaxed">
-              3-minutersövningar som samlar uppmärksamheten efter rast eller lunch, minskar 
-              distraktioner och gör hjärnan redo att ta emot ny kunskap.
-            </p>
-            <div className="mt-6 pt-4 border-t border-[#EBE8DC] flex items-center text-xs font-semibold text-brand-dustyTurquoise">
-              <span>Utforska fokusövningar</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
+            <div className="pt-4 border-t border-[#EBE8DC]">
+              <Link href="/metoden#nervsystemet" className="text-xs font-semibold text-brand-turquoise flex items-center gap-1.5 hover:underline">
+                <span>Läs mer om stresshantering</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
-          {/* Pillar 3 - Warm Yellow tonplatta */}
-          <div className="bg-white p-8 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="w-14 h-14 rounded-2xl bg-brand-warmYellow/30 text-amber-700 flex items-center justify-center mb-6">
-              <Heart className="w-7 h-7 text-amber-600" />
+          {/* Module 3: Trygghet */}
+          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-brand-yellow/40 text-amber-800 flex items-center justify-center">
+                <Heart className="w-6 h-6 text-brand-pink fill-brand-pink/30" />
+              </div>
+              <h3 className="text-2xl font-bold font-cardo text-brand-dark">Trygghet</h3>
+              <p className="text-sm text-brand-darkGrey leading-relaxed">
+                Bygg trygga relationer, stärkt självmedkänsla och ett tillitsfullt klassrumsklimat.
+              </p>
+              <ul className="space-y-2 text-sm text-brand-dark pt-2">
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0" />
+                  <span>Känslohantering & självinsikt</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0" />
+                  <span>Växande tankesätt</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0" />
+                  <span>Medkänsla & gemenskap</span>
+                </li>
+              </ul>
             </div>
-            <h3 className="text-2xl font-bold font-cardo text-brand-dark mb-3">Trygghet & Samreglering</h3>
-            <p className="text-sm text-brand-darkGrey leading-relaxed">
-              Att göra övningar gemensamt i gruppen skapar en tryggare klassrumsatmosfär, minskar friktion 
-              och bygger en gemensam grund för både elever och pedagoger.
-            </p>
-            <div className="mt-6 pt-4 border-t border-[#EBE8DC] flex items-center text-xs font-semibold text-amber-700">
-              <span>Se trygghetsövningar</span>
-              <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
+            <div className="pt-4 border-t border-[#EBE8DC]">
+              <Link href="/metoden#trygghet" className="text-xs font-semibold text-amber-800 flex items-center gap-1.5 hover:underline">
+                <span>Läs mer om trygghet</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* MOBILE APP SHOWCASE - INTEGRATION WITH SKOLYOGA-APP */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-[#E3DFC9] p-8 md:p-14 shadow-sm relative overflow-hidden">
+      {/* SPECIALANPASSAT MATERIAL */}
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="bg-white rounded-3xl border border-[#E3DFC9] p-8 sm:p-12 lg:p-16 shadow-sm overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-turquoise/15 text-brand-dark text-xs font-bold uppercase tracking-wider">
+                <span>Tillgänglighet för alla</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark">
+                Anpassat material för varje elevs förutsättningar
+              </h2>
+              <p className="text-base sm:text-lg text-brand-darkGrey leading-relaxed">
+                Alla övningar finns i nivåanpassade format med visuellt bildstöd, tydlig struktur och anpassat tempo för att fungera i alla undervisningsmiljöer.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <Link
+                  href="/kunskapsbiblioteket?tag=Anpassad+skola"
+                  className="p-4 rounded-2xl bg-brand-sand border border-[#E3DFC9] hover:border-brand-purple transition-all text-sm font-semibold text-brand-dark flex items-center justify-between group"
+                >
+                  <span>Anpassad grundskola</span>
+                  <ArrowRight className="w-4 h-4 text-brand-purple group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/kunskapsbiblioteket?tag=NPF"
+                  className="p-4 rounded-2xl bg-brand-sand border border-[#E3DFC9] hover:border-brand-purple transition-all text-sm font-semibold text-brand-dark flex items-center justify-between group"
+                >
+                  <span>NPF-anpassningar</span>
+                  <ArrowRight className="w-4 h-4 text-brand-purple group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/kunskapsbiblioteket?tag=Stress+och+oro"
+                  className="p-4 rounded-2xl bg-brand-sand border border-[#E3DFC9] hover:border-brand-purple transition-all text-sm font-semibold text-brand-dark flex items-center justify-between group"
+                >
+                  <span>Stress & oro</span>
+                  <ArrowRight className="w-4 h-4 text-brand-purple group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-lg h-72 sm:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg border border-[#E3DFC9]">
+                <Image
+                  src="/images/heroes/anpassat_material_card.jpg"
+                  alt="Anpassat material och övningar för varje elevs förutsättningar"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover object-[center_35%] grayscale brightness-[1.06] contrast-[1.05] hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* PODCAST SECTION */}
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border border-[#E3DFC9] p-8 sm:p-12 lg:p-16 shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div className="lg:col-span-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-pink/25 text-brand-purple text-xs font-bold uppercase tracking-wider">
+                <Headphones className="w-3.5 h-3.5" />
+                <span>Podcast</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark">
+                Skolyogapodden
+              </h2>
+              <p className="text-base sm:text-lg text-brand-darkGrey leading-relaxed">
+                Möt skolledare, lärare och kuratorer som delar konkreta erfarenheter av hur yoga och medveten närvaro skapar arbetsro och minskar frånvaro.
+              </p>
+              
+              <div className="pt-3 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://open.spotify.com/show/2Bv09fJ70lXWj034M3cK1u"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1DB954] text-white text-xs font-semibold shadow hover:opacity-90 transition-opacity"
+                >
+                  <span>Lyssna på Spotify</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="https://podcasts.apple.com/se/podcast/skolyogapodden/id1531234567"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white text-xs font-semibold shadow hover:opacity-90 transition-opacity"
+                >
+                  <span>Apple Podcasts</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex justify-center">
+              <div className="relative w-48 sm:w-56 aspect-square rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+                <Image
+                  src="/images/skolyoga_podden_cover.jpg"
+                  alt="Skolyogapodden"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
+          <div className="text-xs font-bold uppercase tracking-widest text-brand-purple">
+            Röster från skolan
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark">
+            Vad pedagoger och elevhälsa säger
+          </h2>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-yellow/40 text-brand-dark font-bold text-xs uppercase tracking-wider">
+            <span>10 / 10 rekommenderar utbildningen till kollegor</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          <div className="bg-white p-8 rounded-3xl border border-[#E3DFC9] shadow-xs space-y-4">
+            <p className="italic text-base sm:text-lg text-brand-dark leading-relaxed">
+              ”Jag tar med mig praktiska verktyg som eleven kan göra när hen är stressad. Jag tror verkligen på att detta är något bra som många människor skulle ha glädje av.”
+            </p>
+            <div className="pt-4 border-t border-[#EBE8DC] text-xs font-bold uppercase tracking-wider text-brand-purple">
+              Kurator, grundskola
+            </div>
+          </div>
+
+          <div className="bg-white p-8 rounded-3xl border border-[#E3DFC9] shadow-xs space-y-4">
+            <p className="italic text-base sm:text-lg text-brand-dark leading-relaxed">
+              ”Handgripliga verktyg att förmedla till eleverna direkt i klassrummet. Ny kunskap, trygghet och en fantastiskt positiv känsla.”
+            </p>
+            <div className="pt-4 border-t border-[#EBE8DC] text-xs font-bold uppercase tracking-wider text-brand-turquoise">
+              Specialpedagog & kurator
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MOBILE APP SHOWCASE */}
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="bg-white rounded-3xl border border-[#E3DFC9] p-8 md:p-14 lg:p-16 shadow-sm relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-dustyTurquoise/15 text-brand-dark text-xs font-semibold">
-                <Smartphone className="w-4 h-4 text-brand-dustyTurquoise" />
-                <span>Gemensamt ekosystem: Webb & Mobil</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-turquoise/15 text-brand-dark text-xs font-semibold">
+                <Smartphone className="w-4 h-4 text-brand-turquoise" />
+                <span>Webb & Mobilapp</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark leading-tight">
-                Skolyoga-appen i mobilen och på klassrummets storskärm
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark leading-tight">
+                Allt synkat mellan storskärm och mobil
               </h2>
-              <p className="text-base text-brand-darkGrey leading-relaxed">
-                Logga in med samma konto på datorn och i appen. Dina sparade favoritövningar, 
-                anpassade spellistor för klassen och genomförda veckor synkroniseras automatiskt i realtid.
+              <p className="text-base sm:text-lg text-brand-darkGrey leading-relaxed">
+                Använd webben på klassrummets projektor eller appen i fickan. Dina favoritövningar och elevprogram synkroniseras sömlöst i realtid.
               </p>
 
-              <div className="space-y-3 pt-2">
-                <div className="flex items-start gap-3 text-sm text-brand-dark">
-                  <div className="w-5 h-5 rounded-full bg-brand-dustyTurquoise/20 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-brand-dustyTurquoise" />
-                  </div>
-                  <span><strong>Ett enda konto:</strong> Registrera dig här eller i appen och ha allt samlat.</span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-brand-sand/60 border border-[#E3DFC9]">
+                  <div className="font-bold text-sm text-brand-dark font-cardo">Ett konto</div>
+                  <div className="text-xs text-brand-darkGrey mt-1">Samma inloggning på dator och telefon.</div>
                 </div>
-                <div className="flex items-start gap-3 text-sm text-brand-dark">
-                  <div className="w-5 h-5 rounded-full bg-brand-dustyTurquoise/20 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-brand-dustyTurquoise" />
-                  </div>
-                  <span><strong>Snabbstart i klassrummet:</strong> Kör 1–5 minutersövningar direkt på projektor.</span>
+                <div className="p-4 rounded-2xl bg-brand-sand/60 border border-[#E3DFC9]">
+                  <div className="font-bold text-sm text-brand-dark font-cardo">Följ framsteg</div>
+                  <div className="text-xs text-brand-darkGrey mt-1">Se minuter av lugn och avklarade pass.</div>
                 </div>
-                <div className="flex items-start gap-3 text-sm text-brand-dark">
-                  <div className="w-5 h-5 rounded-full bg-brand-dustyTurquoise/20 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-brand-dustyTurquoise" />
-                  </div>
-                  <span><strong>Progression & Veckans övning:</strong> Följ terminens tema steg för steg.</span>
+                <div className="p-4 rounded-2xl bg-brand-sand/60 border border-[#E3DFC9]">
+                  <div className="font-bold text-sm text-brand-dark font-cardo">Kör på tavlan</div>
+                  <div className="text-xs text-brand-darkGrey mt-1">1–5 minuters mikropauser i helskärm.</div>
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 pt-4">
-                <Link
-                  href="/logga-in"
-                  className="px-6 py-3 rounded-full bg-brand-dustyPurple text-white font-semibold text-sm hover:bg-[#781b61] transition-all shadow-sm"
-                >
-                  Logga in på ditt konto
-                </Link>
+              <div className="flex flex-wrap items-center gap-4 pt-3">
+                {user ? (
+                  <Link
+                    href="/profil"
+                    className="px-8 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm hover:bg-[#781b61] transition-all shadow-sm"
+                  >
+                    Gå till Min Profil
+                  </Link>
+                ) : (
+                  <Link
+                    href="/logga-in"
+                    className="px-8 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm hover:bg-[#781b61] transition-all shadow-sm"
+                  >
+                    Skapa gratis konto
+                  </Link>
+                )}
                 <Link
                   href="/kunskapsbiblioteket"
-                  className="px-6 py-3 rounded-full bg-brand-sand border border-[#D5D0BE] text-brand-dark font-semibold text-sm hover:bg-[#EBE8DC] transition-all"
+                  className="px-6 py-3.5 rounded-full bg-brand-sand border border-[#D5D0BE] text-brand-dark font-semibold text-sm hover:bg-[#EBE8DC] transition-all"
                 >
                   Öppna övningsbanken
                 </Link>
@@ -222,7 +535,7 @@ export default function HomePage() {
             <div className="lg:col-span-5 flex justify-center items-center gap-4">
               <div className="relative w-48 sm:w-56 rounded-3xl overflow-hidden shadow-2xl border-4 border-[#2A2A2A] transform -rotate-2 hover:rotate-0 transition-transform">
                 <Image
-                  src="/images/screenshot_1_home.jpg"
+                  src="/images/app_screenshot_1.png"
                   alt="Skolyoga app hemskärm"
                   width={300}
                   height={600}
@@ -231,7 +544,7 @@ export default function HomePage() {
               </div>
               <div className="relative w-44 sm:w-52 rounded-3xl overflow-hidden shadow-xl border-4 border-[#2A2A2A] transform rotate-3 hover:rotate-0 transition-transform hidden sm:block">
                 <Image
-                  src="/images/screenshot_2_exercise.jpg"
+                  src="/images/app_screenshot_2.png"
                   alt="Skolyoga app övning"
                   width={300}
                   height={600}
@@ -245,32 +558,33 @@ export default function HomePage() {
       </section>
 
       {/* POPULAR EXERCISES SPOTLIGHT */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-brand-dustyPurple mb-2">
-              Direkt från kunskapsbiblioteket
+            <div className="text-xs font-bold uppercase tracking-wider text-brand-purple mb-2">
+              Övningsbanken
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark">Populära övningar att testa</h2>
-            <p className="text-sm text-brand-darkGrey mt-2">
-              Klicka på en övning för att starta direkt med din klass på storskärm.
+            <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark">Populära mikropauser</h2>
+            <p className="text-sm text-brand-darkGrey mt-1">
+              Starta direkt med klassen på storskärm utan förberedelser.
             </p>
           </div>
 
           <Link
             href="/kunskapsbiblioteket"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-dustyPurple hover:underline transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-purple hover:underline transition-colors shrink-0"
           >
-            <span>Se alla 125 övningar</span>
+            <span>Se alla övningar</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featured.map((exercise) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {featured.slice(0, 4).map((exercise) => (
             <ExerciseCard
               key={exercise.id}
               exercise={exercise}
+              showPopularBadge={true}
               onSelect={(ex) => setSelectedExercise(ex)}
             />
           ))}
@@ -278,37 +592,57 @@ export default function HomePage() {
       </section>
 
       {/* TRAINING & WORKSHOPS CALLOUT */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-white border border-[#E3DFC9] p-8 md:p-14 overflow-hidden relative shadow-sm">
-          <div className="max-w-2xl relative z-10 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-dustyPink/25 text-brand-dustyPurple text-xs font-bold">
-              Skolyoga Konsult & Utbildningar
+      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="rounded-3xl bg-white border border-[#E3DFC9] p-8 md:p-12 lg:p-16 overflow-hidden relative shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-pink/25 text-brand-purple text-xs font-bold">
+                Skolyoga Konsult & Utbildning
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark leading-tight">
+                Vill du bli certifierad Skolyogakonsult?
+              </h2>
+              <p className="text-brand-darkGrey leading-relaxed text-base sm:text-lg">
+                Vår <strong>100h-utbildning</strong> ger pedagoger, elevhälsa och yogalärare verktyg för att implementera självledarskap, stresshantering och studieteknik i hela skolan.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <Link
+                  href="/utbildningar"
+                  className="px-8 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm hover:bg-[#781b61] transition-colors shadow-sm"
+                >
+                  Läs om 100h-utbildningen
+                </Link>
+                <Link
+                  href="/om-skolyoga"
+                  className="px-6 py-3.5 rounded-full bg-brand-sand text-brand-dark border border-[#D5D0BE] font-semibold text-sm hover:bg-[#EBE8DC] transition-colors"
+                >
+                  Boka workshop
+                </Link>
+              </div>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark leading-tight">
-              Vill du fördjupa dig och bli Skolyogakonsult?
-            </h2>
-            <p className="text-brand-darkGrey leading-relaxed text-base">
-              Vår <strong>100h-utbildning</strong> vänder sig till dig som arbetar i skola, elevhälsa, fritidshem 
-              eller som yogalärare och vill få verktyg att leda och implementera livsförmågor 
-              i hela skolverksamheten.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-2">
-              <Link
-                href="/utbildningar"
-                className="px-6 py-3 rounded-full bg-brand-dustyPurple text-white font-semibold text-sm hover:bg-[#781b61] transition-colors shadow-sm"
-              >
-                Läs om 100h-utbildningen
-              </Link>
-              <Link
-                href="/om-skolyoga"
-                className="px-6 py-3 rounded-full bg-brand-sand text-brand-dark border border-[#D5D0BE] font-semibold text-sm hover:bg-[#EBE8DC] transition-colors"
-              >
-                Kontakta oss för workshops
-              </Link>
+
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-lg h-72 sm:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg border border-[#E3DFC9]">
+                <Image
+                  src="/images/heroes/konsult_utbildning_card.jpg"
+                  alt="Skolyoga konsult- och lärarutbildning"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover object-[center_35%] grayscale brightness-[1.06] contrast-[1.05] hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             </div>
+
           </div>
         </div>
       </section>
+
+      {/* NEWSLETTER SUBSCRIPTION SECTION */}
+      <NewsletterSection />
+
+      {/* INSTAGRAM FEED SECTION */}
+      <InstagramFeed />
 
       {/* Video Modal if clicked */}
       <VideoPlayerModal

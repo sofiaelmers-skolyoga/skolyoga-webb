@@ -8,10 +8,10 @@ export function getExerciseBySlug(slug: string): Exercise | undefined {
 }
 
 export function getFeaturedExercises(): Exercise[] {
-  // Pick popular or highly rated exercises
-  return allExercises
-    .filter((ex) => ex.youtube_id && ex.thumbnail_url)
-    .sort((a, b) => b.views_count - a.views_count)
+  // Pick popular exercises with most plays/views
+  return [...allExercises]
+    .filter((ex) => ex.youtube_id)
+    .sort((a, b) => (b.views_count || 0) - (a.views_count || 0))
     .slice(0, 6);
 }
 

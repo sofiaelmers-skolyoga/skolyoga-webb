@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ShieldCheck, ArrowLeft, Mail } from "lucide-react";
+import { PageHero } from "@/components/layout/PageHero";
 
 export const metadata = {
   title: "Integritetspolicy - Skolyoga",
@@ -9,30 +10,32 @@ export const metadata = {
 
 export default function IntegritetspolicyPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+    <div className="space-y-12 pb-20">
       
-      <Link
-        href="/"
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-dustyPurple hover:underline mb-8"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span>Tillbaka till startsidan</span>
-      </Link>
+      {/* Full-bleed Hero with authentic background image */}
+      <PageHero
+        badge="GDPR & Säkerhet"
+        badgeIcon={<ShieldCheck className="w-3.5 h-3.5" />}
+        title="Integritetspolicy & Cookies"
+        description="Skolyogas integritetspolicy för webbplatsen och mobilapplikationen. Vi skyddar dina personuppgifter enligt gällande dataskyddsförordning (GDPR)."
+        bgImage="/images/heroes/photoshoot_2279.jpg"
+        bgAlt="Integritetspolicy bakgrund"
+        align="center"
+        objectPosition="object-[60%_30%]"
+      />
 
-      <div className="bg-white rounded-3xl p-8 md:p-14 border border-[#E3DFC9] shadow-sm space-y-8">
-        
-        <div className="space-y-3 border-b border-[#EBE8DC] pb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-dustyTurquoise/15 text-[#1B6465] text-xs font-bold">
-            <ShieldCheck className="w-4 h-4" />
-            <span>GDPR & Säkerhet</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark">
-            Integritetspolicy & Cookies
-          </h1>
-          <p className="text-xs text-brand-darkGrey">
-            Gäller för Skolyogas webbplats och Skolyoga-appen (iOS & Android).
-          </p>
-        </div>
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="max-w-4xl mx-auto space-y-8">
+          
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-dustyPurple hover:underline"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Tillbaka till startsidan</span>
+          </Link>
+
+          <div className="bg-white rounded-3xl p-8 md:p-14 border border-[#E3DFC9] shadow-sm space-y-8">
 
         <div className="prose prose-stone max-w-none space-y-6 text-sm text-brand-darkGrey leading-relaxed">
           <h2 className="text-xl font-bold font-cardo text-brand-dark">1. Personuppgifter</h2>
@@ -74,8 +77,9 @@ export default function IntegritetspolicyPage() {
           </div>
         </div>
 
+        </div>
       </div>
-
+      </div>
     </div>
   );
 }

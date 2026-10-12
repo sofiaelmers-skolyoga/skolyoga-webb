@@ -5,6 +5,7 @@ import { X, Heart, Lock, Clock, Sparkles, UserPlus, CheckCircle2 } from "lucide-
 import { Exercise } from "@/types";
 import { useAuth } from "@/context/AuthContext";
 import { formatDuration } from "@/lib/utils";
+import { trackVideoPlay } from "@/lib/analytics";
 import Link from "next/link";
 
 interface VideoPlayerModalProps {
@@ -13,7 +14,7 @@ interface VideoPlayerModalProps {
 }
 
 export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
-  const { user, isFavorite, toggleFavorite, loginDemo } = useAuth();
+  const { user, isFavorite, toggleFavorite, addRecentlyWatched } = useAuth();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -22,6 +23,13 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
+
+  useEffect(() => {
+    if (exercise && (!exercise.is_protected || user)) {
+      addRecentlyWatched(exercise.id);
+      trackVideoPlay(exercise.id, exercise.title, exercise.category);
+    }
+  }, [exercise, user, addRecentlyWatched]);
 
   if (!exercise) return null;
 
@@ -81,8 +89,8 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
               </div>
               <h3 className="text-xl font-bold font-cardo mb-2">Denna övning kräver inloggning</h3>
               <p className="text-sm text-stone-300 max-w-md mb-6 leading-relaxed">
-                Skapa ett kostnadsfritt konto eller logga in med din skolas licens för att få 
-                obegränsad tillgång till alla 125 övningar i klassrummet. Samma inlogg fungerar i appen!
+                Skapa ett kostnadsfritt pedagogkonto eller logga in för att få 
+                obegränsad tillgång till alla övningar i klassrummet. Samma inlogg fungerar i appen!
               </p>
               
               <div className="flex flex-wrap items-center justify-center gap-3">
@@ -91,14 +99,8 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
                   onClick={onClose}
                   className="px-6 py-2.5 rounded-full bg-brand-dustyPurple text-white font-medium text-sm shadow-md hover:bg-[#781b61] transition-colors"
                 >
-                  Logga in / Skapa konto
+                  Logga in eller skapa konto
                 </Link>
-                <button
-                  onClick={() => loginDemo("teacher")}
-                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors"
-                >
-                  Testa med demo-konto direkt
-                </button>
               </div>
             </div>
           ) : exercise.youtube_id ? (

@@ -8,15 +8,18 @@ import { allExercises } from "@/lib/exercises";
 import { ExerciseCard } from "@/components/exercises/ExerciseCard";
 import { VideoPlayerModal } from "@/components/exercises/VideoPlayerModal";
 import { Exercise } from "@/types";
+import { PageHero } from "@/components/layout/PageHero";
+import { LoginFormCard } from "@/components/auth/LoginFormCard";
 
 export default function MinaFavoriterPage() {
-  const { user, favorites, playlists, createPlaylist, loginDemo } = useAuth();
+  const { user, favorites, playlists, createPlaylist } = useAuth();
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
   const [isCreatingPlaylist, setIsCreatingPlaylist] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
 
-  const favoriteExercises = allExercises.filter((ex) => favorites.includes(ex.id));
+  const favIds = favorites.map(String);
+  const favoriteExercises = allExercises.filter((ex) => favIds.includes(String(ex.id)));
 
   const handleCreatePlaylist = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,36 +32,41 @@ export default function MinaFavoriterPage() {
 
   if (!user) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <div className="w-16 h-16 rounded-full bg-brand-dustyPink/20 text-brand-dustyPurple flex items-center justify-center mx-auto mb-4 border border-brand-dustyPink/40">
-          <Heart className="w-8 h-8 fill-brand-dustyPink text-brand-dustyPink" />
-        </div>
-        <h1 className="text-3xl font-bold font-cardo text-brand-dark mb-3">Mina Sparade Favoriter</h1>
-        <p className="text-brand-darkGrey max-w-md mx-auto mb-8 leading-relaxed text-sm">
-          Logga in eller skapa ett lärarkonto för att spara dina favoritövningar och 
-          bygga egna spellistor för dina lektioner. Samma konto fungerar i Skolyoga-appen.
-        </p>
+      <div className="space-y-12 pb-20">
+        <PageHero
+          badge="Favoriter & Spellistor"
+          badgeIcon={<Heart className="w-3.5 h-3.5" />}
+          title="Mina Sparade Favoriter"
+          description="Logga in eller skapa ett gratis konto för att spara dina favoritövningar och bygga egna lektionsspellistor för klassrummet. Synkas automatiskt med Skolyoga-appen."
+          bgImage="/images/heroes/photoshoot_2017.jpg"
+          bgAlt="Skolyoga favoriter bakgrund"
+          align="center"
+          objectPosition="object-[70%_25%]"
+        />
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/logga-in"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-brand-dustyPurple text-white font-semibold text-sm shadow hover:bg-[#781b61] transition-all"
-          >
-            Logga in på ditt konto
-          </Link>
-          <button
-            onClick={() => loginDemo("teacher")}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white text-brand-dark border border-[#E3DFC9] font-semibold text-sm hover:bg-stone-50 transition-colors shadow-sm"
-          >
-            Testa direkt som inloggad lärare (Demo)
-          </button>
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 -mt-6 sm:-mt-10 relative z-20">
+          <LoginFormCard showTitle={false} />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 space-y-12">
+    <div className="space-y-12 pb-20">
+      
+      {/* Full-bleed Hero */}
+      <PageHero
+        badge="Klassrumsverktyg"
+        badgeIcon={<Heart className="w-3.5 h-3.5" />}
+        title="Mina Sparade Favoriter & Spellistor"
+        description="Dina handplockade mikropauser och spellistor för klassrummet. Synkade i realtid med Skolyoga-appen i mobilen."
+        bgImage="/images/heroes/photoshoot_2017.jpg"
+        bgAlt="Skolyoga favoriter bakgrund"
+        align="left"
+        objectPosition="object-[70%_25%]"
+      />
+
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-12">
       
       {/* User Header & App Sync Status */}
       <div className="bg-white rounded-3xl p-8 border border-[#E3DFC9] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -232,6 +240,7 @@ export default function MinaFavoriterPage() {
         onClose={() => setSelectedExercise(null)}
       />
 
+      </div>
     </div>
   );
 }

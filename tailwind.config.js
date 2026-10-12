@@ -27,6 +27,9 @@ module.exports = {
           sandDark: "#ECE8DC",
 
           // Backwards compatibility aliases
+          purple: "#8C2272",
+          pink: "#E29B9D",
+          turquoise: "#70B9BA",
           coral: "#E29B9D",
           rose: "#E29B9D",
           teal: "#70B9BA",

@@ -1,12 +1,14 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Instagram, Facebook, Youtube, Mail, Smartphone, ArrowRight, ShieldCheck } from "lucide-react";
-
+import { Heart, Instagram, Facebook, Youtube, Mail, Smartphone, ArrowRight, ShieldCheck, Sparkles, Accessibility } from "lucide-react";
 export function Footer() {
+
   return (
-    <footer className="bg-[#2D2D2C] text-[#E0DDD5] pt-16 pb-12 border-t border-[#4A4A48]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer aria-label="Sidfot" className="bg-[#2D2D2C] text-[#E0DDD5] pt-16 pb-12 border-t border-[#4A4A48]">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#4A4A48]/70">
           
           {/* Col 1: Mission & Brand */}
@@ -15,7 +17,7 @@ export function Footer() {
               <div className="relative w-10 h-10 shrink-0">
                 <Image
                   src="/images/emblem_turquoise.png"
-                  alt="Skolyoga emblem"
+                  alt="Skolyoga logotyp symbol"
                   width={40}
                   height={40}
                   className="w-full h-full object-contain"
@@ -26,17 +28,18 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-[#BFBAB0] leading-relaxed max-w-sm">
-              Vi utbildar skolpersonal i livsförmågor och tillhandahåller evidensbaserade, 
-              korta rörelse- och fokusövningar (1–5 minuter) som skapar trygghet, studiero 
-              och hållbara hjärnor i klassrummet.
+              Vi tränar elever och pedagoger i <strong>stresshantering</strong>, <strong>trygghet</strong> och <strong>studieteknik</strong>. 
+              Genom korta, kroppsbaserade övningar skapar vi lugn och hållbara hjärnor i klassrummet.
             </p>
+
+            {/* Social media links with accessible labels */}
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="https://www.instagram.com/skolyoga/"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-[#3D3D3B] flex items-center justify-center hover:bg-brand-dustyPink text-white transition-colors"
-                aria-label="Instagram"
+                className="w-9 h-9 rounded-full bg-[#3D3D3B] flex items-center justify-center hover:bg-brand-pink text-white transition-colors"
+                aria-label="Besök Skolyoga på Instagram (öppnas i ny flik)"
               >
                 <Instagram className="w-4 h-4" />
               </a>
@@ -44,8 +47,8 @@ export function Footer() {
                 href="https://www.facebook.com/skolyoga/"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-[#3D3D3B] flex items-center justify-center hover:bg-brand-dustyPink text-white transition-colors"
-                aria-label="Facebook"
+                className="w-9 h-9 rounded-full bg-[#3D3D3B] flex items-center justify-center hover:bg-brand-pink text-white transition-colors"
+                aria-label="Besök Skolyoga på Facebook (öppnas i ny flik)"
               >
                 <Facebook className="w-4 h-4" />
               </a>
@@ -53,120 +56,142 @@ export function Footer() {
                 href="https://www.youtube.com/channel/UCXkuMhAmgWoc41O3n5XsJUw"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-[#3D3D3B] flex items-center justify-center hover:bg-brand-dustyPink text-white transition-colors"
-                aria-label="YouTube"
+                className="w-9 h-9 rounded-full bg-[#3D3D3B] flex items-center justify-center hover:bg-brand-pink text-white transition-colors"
+                aria-label="Besök Skolyoga på YouTube (öppnas i ny flik)"
               >
                 <Youtube className="w-4 h-4" />
               </a>
             </div>
+
           </div>
 
-          {/* Col 2: Utbildningar */}
+          {/* Col 2: Utbildningar & Program */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-brand-warmYellow uppercase tracking-wider">Utbildningar</h4>
+            <h4 className="text-xs font-semibold text-brand-yellow uppercase tracking-wider">Verksamhet</h4>
             <ul className="space-y-2 text-sm text-[#D1CCC2]">
               <li>
-                <Link href="/utbildningar" className="hover:text-brand-dustyTurquoise transition-colors">
-                  Alla utbildningar
+                <Link href="/program" className="hover:text-brand-turquoise transition-colors flex items-center gap-1">
+                  <span>Digitala Program</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-yellow/30 text-amber-200">Nytt</span>
                 </Link>
               </li>
               <li>
-                <Link href="/utbildningar" className="hover:text-brand-dustyTurquoise transition-colors">
-                  100h Skolyogautbildning
+                <Link href="/program/yTk3wFhl1s011CoBYPpY" className="hover:text-brand-turquoise transition-colors">
+                  Hemmayoga (6 veckor)
                 </Link>
               </li>
               <li>
-                <Link href="/utbildningar" className="hover:text-brand-dustyTurquoise transition-colors">
-                  Halvdagsworkshops
+                <Link href="/utbildningar" className="hover:text-brand-turquoise transition-colors">
+                  100h Skolyogakonsult
                 </Link>
               </li>
               <li>
-                <Link href="/utbildningar" className="hover:text-brand-dustyTurquoise transition-colors">
-                  Skolsatsningar & Kommun
+                <Link href="/kunskapsbiblioteket" className="hover:text-brand-turquoise transition-colors">
+                  Kunskapsbiblioteket
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop" className="hover:text-brand-turquoise transition-colors flex items-center gap-1">
+                  <span>Shop</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-brand-pink/30 text-pink-200">Böcker & Kläder</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/stod-oss" className="hover:text-brand-turquoise transition-colors">
+                  Stöd oss (Swish & Företag)
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Kunskapsbibliotek */}
+          {/* Col 3: Metod & Projekt */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-brand-dustyTurquoise uppercase tracking-wider">Biblioteket</h4>
+            <h4 className="text-xs font-semibold text-brand-turquoise uppercase tracking-wider">Metod & Projekt</h4>
             <ul className="space-y-2 text-sm text-[#D1CCC2]">
               <li>
-                <Link href="/kunskapsbiblioteket" className="hover:text-brand-dustyPink transition-colors">
-                  Alla 125 övningar
+                <Link href="/metoden" className="hover:text-brand-pink transition-colors">
+                  Skolyogas metod
                 </Link>
               </li>
               <li>
-                <Link href="/kunskapsbiblioteket?kategori=Stresshantering" className="hover:text-brand-dustyPink transition-colors">
-                  Stresshantering
+                <Link href="/metoden#nervsystemet" className="hover:text-brand-pink transition-colors">
+                  Nervsystemet & Vagus
                 </Link>
               </li>
               <li>
-                <Link href="/kunskapsbiblioteket?kategori=Fokus" className="hover:text-brand-dustyPink transition-colors">
-                  Fokus i klassrummet
+                <Link href="/projekt" className="hover:text-brand-pink transition-colors">
+                  Utvecklingsprojekt
                 </Link>
               </li>
               <li>
-                <Link href="/kunskapsbiblioteket?anpassning=NPF" className="hover:text-brand-dustyPink transition-colors">
-                  NPF-anpassat stöd
+                <Link href="/artiklar" className="hover:text-brand-pink transition-colors">
+                  Artiklar & Nyheter
                 </Link>
               </li>
               <li>
-                <Link href="/kunskapsbiblioteket?anpassning=Sittande" className="hover:text-brand-dustyPink transition-colors">
-                  Sittande övningar
+                <Link href="/om-skolyoga" className="hover:text-brand-pink transition-colors">
+                  Om oss & Teamet
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 4: Skolyoga App & Kontakt */}
+          {/* Col 4: Kontakt, Support & Lagkrav */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-brand-dustyPink uppercase tracking-wider">Mobilappen & Kontakt</h4>
-            <div className="space-y-3 text-sm text-[#D1CCC2]">
-              <div className="p-3 rounded-2xl bg-[#3D3D3B] border border-[#52524E]">
-                <div className="flex items-center gap-2.5 mb-1.5">
-                  <div className="w-6 h-6 rounded-lg overflow-hidden shrink-0">
-                    <Image
-                      src="/images/app_icon_512.png"
-                      alt="Skolyoga App"
-                      width={24}
-                      height={24}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <span className="text-xs font-bold text-white">Skolyoga Appen</span>
-                </div>
-                <p className="text-[11px] text-[#BFBAB0] leading-snug">
-                  Samma inloggning på webb och mobil med fullständig synkronisering.
-                </p>
-              </div>
-
-              <p className="flex items-center gap-2 text-xs">
-                <Mail className="w-3.5 h-3.5 text-brand-dustyTurquoise shrink-0" />
-                <a href="mailto:hej@skolyoga.se" className="hover:text-white transition-colors">
+            <h4 className="text-xs font-semibold text-brand-pink uppercase tracking-wider">Kontakt & Lagkrav</h4>
+            <ul className="space-y-2 text-sm text-[#D1CCC2]">
+              <li>
+                <Link href="/kontakt" className="hover:text-white transition-colors">
+                  Kontakta oss
+                </Link>
+              </li>
+              <li>
+                <Link href="/tillganglighet" className="text-brand-yellow hover:underline transition-colors flex items-center gap-1.5 font-semibold">
+                  <Accessibility className="w-3.5 h-3.5" />
+                  <span>Tillgänglighetsredogörelse</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/vanliga-fragor" className="hover:text-white transition-colors">
+                  Vanliga frågor (FAQ)
+                </Link>
+              </li>
+              <li>
+                <Link href="/villkor" className="hover:text-white transition-colors">
+                  Allmänna villkor
+                </Link>
+              </li>
+              <li>
+                <Link href="/integritetspolicy" className="hover:text-white transition-colors">
+                  Integritetspolicy (GDPR)
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:hej@skolyoga.se" className="text-brand-turquoise hover:underline">
                   hej@skolyoga.se
                 </a>
-              </p>
-              <p className="text-[11px] text-[#A6A095]">
-                Skolyoga Ekonomisk Förening<br />
-                Org.nr: 769635-4927
-              </p>
-            </div>
+              </li>
+            </ul>
           </div>
+
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#9E988D] gap-4">
-          <p>© {new Date().getFullYear()} Skolyoga. Alla rättigheter förbehållna.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/om-skolyoga" className="hover:text-white transition-colors">
-              Om oss
+        {/* Bottom Bar: Copyright & Standards */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#9E9A90] gap-4">
+          <p>© {new Date().getFullYear()} Skolyoga Sverige AB. Alla rättigheter förbehållna.</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="/tillganglighet" className="flex items-center gap-1.5 text-brand-yellow hover:underline">
+              <Accessibility className="w-3.5 h-3.5" />
+              <span>WCAG 2.1 AA & Tillgänglighetsdirektivet</span>
             </Link>
-            <Link href="/integritetspolicy" className="hover:text-white transition-colors">
-              Integritetspolicy
-            </Link>
-            <Link href="/utbildningar" className="hover:text-white transition-colors">
-              Utbildningar
+            <span>•</span>
+            <span className="flex items-center gap-1.5 text-brand-turquoise">
+              <Smartphone className="w-3.5 h-3.5" />
+              <span>Integrerad med Skolyoga-appen</span>
+            </span>
+            <span>•</span>
+            <Link href="/integritetspolicy" className="hover:underline">
+              GDPR-säkrad
             </Link>
           </div>
         </div>

@@ -10,9 +10,10 @@ import { formatDuration } from "@/lib/utils";
 interface ExerciseCardProps {
   exercise: Exercise;
   onSelect: (exercise: Exercise) => void;
+  showPopularBadge?: boolean;
 }
 
-export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
+export function ExerciseCard({ exercise, onSelect, showPopularBadge }: ExerciseCardProps) {
   const { user, isFavorite, toggleFavorite } = useAuth();
   const favorited = isFavorite(exercise.id);
 
@@ -27,10 +28,24 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
         return "bg-brand-dustyTurquoise/25 text-[#1B6465] border-brand-dustyTurquoise/50";
       case "Trygghet":
         return "bg-brand-dustyPink/20 text-[#8C2272] border-brand-dustyPink/40";
+      case "Om Skolyoga":
+        return "bg-brand-sand text-brand-dark border-[#D5D0BE]";
       default:
         return "bg-stone-100 text-stone-700 border-stone-200";
     }
   };
+
+  const [thumbSrc, setThumbSrc] = React.useState<string | null>(
+    exercise.thumbnail_url ||
+    (exercise.youtube_id ? `https://img.youtube.com/vi/${exercise.youtube_id}/hqdefault.jpg` : null)
+  );
+
+  React.useEffect(() => {
+    setThumbSrc(
+      exercise.thumbnail_url ||
+      (exercise.youtube_id ? `https://img.youtube.com/vi/${exercise.youtube_id}/hqdefault.jpg` : null)
+    );
+  }, [exercise.thumbnail_url, exercise.youtube_id]);
 
   const isLocked = exercise.is_protected && !user;
 
@@ -42,12 +57,17 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
         onClick={() => onSelect(exercise)}
         className="relative aspect-video w-full bg-stone-900 cursor-pointer overflow-hidden"
       >
-        {exercise.thumbnail_url ? (
+        {thumbSrc ? (
           <img
-            src={exercise.thumbnail_url}
+            src={thumbSrc}
             alt={exercise.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
+            onError={() => {
+              if (exercise.youtube_id && thumbSrc !== `https://img.youtube.com/vi/${exercise.youtube_id}/hqdefault.jpg`) {
+                setThumbSrc(`https://img.youtube.com/vi/${exercise.youtube_id}/hqdefault.jpg`);
+              }
+            }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-brand-sand text-brand-darkGrey">
@@ -67,6 +87,14 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
           <Clock className="w-3.5 h-3.5 text-white/80" />
           <span>{formatDuration(exercise.duration_tag, exercise.duration_formatted)}</span>
         </div>
+
+        {/* Popular badge */}
+        {showPopularBadge && !isLocked && (
+          <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md bg-brand-dustyPurple/90 backdrop-blur-sm text-white text-xs font-semibold flex items-center gap-1.5 shadow">
+            <Sparkles className="w-3.5 h-3.5 text-brand-warmYellow fill-brand-warmYellow" />
+            <span>Mest spelad • {exercise.views_count} ggr</span>
+          </div>
+        )}
 
         {/* Lock indicator for non-logged in users */}
         {isLocked && (
@@ -98,9 +126,17 @@ export function ExerciseCard({ exercise, onSelect }: ExerciseCardProps) {
         <div>
           {/* Categories & Tweaks */}
           <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-            <span className={`px-2.5 py-0.5 text-[11px] font-semibold rounded-full border ${getCategoryColor(exercise.category)}`}>
-              {exercise.category}
-            </span>
+            {exercise.categories && exercise.categories.length > 0 ? (
+              exercise.categories.map((cat) => (
+                <span key={cat} className={`px-2.5 py-0.5 text-[11px] font-semibold rounded-full border ${getCategoryColor(cat)}`}>
+                  {cat}
+                </span>
+              ))
+            ) : (
+              <span className={`px-2.5 py-0.5 text-[11px] font-semibold rounded-full border ${getCategoryColor(exercise.category)}`}>
+                {exercise.category}
+              </span>
+            )}
             
             {exercise.tweak_tags.map((tweak) => (
               <span 

@@ -19,8 +19,14 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.0625rem; /* 17px base text for clear, effortless readability */
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  line-height: 1.7;
 }
 
 h1, h2, h3, .font-cardo {
@@ -41,4 +47,27 @@ h1, h2, h3, .font-cardo {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #AFA898;
+}
+
+/* Skip Link to main content (WCAG 2.4.1 Bypass Blocks) */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: #8C2272;
+  color: #FFFFFF !important;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 99999;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus, .skip-link:focus-visible {
+  top: 16px;
+  outline: 3px solid #FFE271;
+  outline-offset: 2px;
 }
