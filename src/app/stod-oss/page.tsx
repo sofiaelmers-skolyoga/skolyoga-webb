@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Heart, 
   Sparkles, 
@@ -294,6 +295,79 @@ export default function StodOssPage() {
             </div>
           </form>
         )}
+      </section>
+
+      {/* VÅRA SAMARBETSPARTNERS & STÖDJARE */}
+      <section className="space-y-8 pt-6 border-t border-[#E3DFC9]">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-dustyTurquoise/20 text-[#1B6465] text-xs font-bold uppercase tracking-wider">
+            <span>Samarbetspartners & Stödjare</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+            Företag och organisationer som stöttar Skolyoga
+          </h2>
+          <p className="text-sm text-brand-darkGrey">
+            Tillsammans med våra engagerade partners kan vi nå ut till fler skolor och ge tusentals barn och elever konkreta verktyg för livet.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 items-stretch">
+          {[
+            {
+              name: "ICA Maxi Nacka",
+              logo: "/images/partners/ica_maxi_nacka.svg",
+              role: "Företagspartner",
+            },
+            {
+              name: "ICA Kvantum Vallentuna",
+              logo: "/images/partners/ica_kvantum_vallentuna.svg",
+              role: "Företagspartner",
+            },
+            {
+              name: "Folkhälsomyndigheten",
+              logo: "/images/partners/folkhalsomyndigheten.svg",
+              role: "Projektstöd",
+            },
+            {
+              name: "Allmänna Arvsfonden",
+              logo: "/images/partners/arvsfonden.svg",
+              role: "Projektfinansiär",
+            },
+            {
+              name: "Generation Pep",
+              logo: "/images/partners/generation_pep.svg",
+              role: "Samarbetspartner",
+            },
+            {
+              name: "Funkibator",
+              logo: "/images/partners/funkibator.svg",
+              role: "Samarbetspartner",
+            },
+          ].map((partner) => (
+            <div
+              key={partner.name}
+              className="bg-white rounded-2xl border border-[#E3DFC9] p-4 flex flex-col items-center justify-between shadow-xs hover:shadow-md transition-shadow group text-center"
+            >
+              <div className="relative w-full h-16 flex items-center justify-center p-2">
+                <Image
+                  src={partner.logo}
+                  alt={`${partner.name} logotyp`}
+                  width={160}
+                  height={50}
+                  className="max-h-12 w-auto object-contain transition-transform group-hover:scale-105"
+                />
+              </div>
+              <div className="pt-2 border-t border-[#F2EFE6] w-full">
+                <span className="text-[11px] font-semibold text-brand-dark block truncate">
+                  {partner.name}
+                </span>
+                <span className="text-[10px] text-brand-darkGrey block">
+                  {partner.role}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       </div>

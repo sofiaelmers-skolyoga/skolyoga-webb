@@ -14,6 +14,8 @@ interface ExerciseFiltersProps {
   onGradeChange: (grade: string) => void;
   selectedTweak: string;
   onTweakChange: (tweak: string) => void;
+  selectedIntervention?: string;
+  onInterventionChange?: (intervention: string) => void;
   onReset: () => void;
   totalCount: number;
   filteredCount: number;
@@ -30,11 +32,21 @@ export function ExerciseFilters({
   onGradeChange,
   selectedTweak,
   onTweakChange,
+  selectedIntervention = "Alla interventioner",
+  onInterventionChange,
   onReset,
   totalCount,
   filteredCount,
 }: ExerciseFiltersProps) {
-  const categories = ["Alla kategorier", "Stresshantering", "Studieteknik", "Trygghet", "Om Skolyoga", "För skolpersonal"];
+  const categories = [
+    "Alla kategorier",
+    "6-veckorsinterventioner",
+    "Stresshantering",
+    "Studieteknik",
+    "Trygghet",
+    "Om Skolyoga",
+    "För skolpersonal",
+  ];
   const durations = ["Alla längder", "1 min", "3 min", "5 min", "10 min"];
   const grades = ["Alla årskurser", "Förskolan", "Lågstadiet", "Mellanstadiet", "Högstadiet", "Gymnasiet"];
   const tweaks = ["Alla anpassningar", "Sittande", "NPF", "Anpassad skola", "Stress och oro"];
@@ -44,7 +56,8 @@ export function ExerciseFilters({
     selectedCategory !== "Alla kategorier" ||
     selectedDuration !== "Alla längder" ||
     selectedGrade !== "Alla årskurser" ||
-    selectedTweak !== "Alla anpassningar";
+    selectedTweak !== "Alla anpassningar" ||
+    selectedIntervention !== "Alla interventioner";
 
   return (
     <div className="bg-white rounded-2xl p-6 border border-[#E3DFC9] shadow-sm mb-8 space-y-6">
@@ -166,10 +179,48 @@ export function ExerciseFilters({
 
       </div>
 
+      {/* 6-veckorsinterventioner sub-filter pills */}
+      {selectedCategory === "6-veckorsinterventioner" && (
+        <div className="p-4 rounded-xl bg-brand-sand/70 border border-[#E3DFC9] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-in fade-in">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-bold text-brand-dark uppercase tracking-wider">
+              Intervention:
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {[
+                { id: "Alla interventioner", label: "Alla tre" },
+                { id: "Trygghet", label: "Trygghet (6 v)" },
+                { id: "Stresshantering", label: "Stresshantering (6 v)" },
+                { id: "Studieteknik", label: "Studieteknik (6 v)" },
+              ].map((inv) => (
+                <button
+                  key={inv.id}
+                  type="button"
+                  onClick={() => onInterventionChange?.(inv.id)}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                    (selectedIntervention || "Alla interventioner") === inv.id
+                      ? "bg-brand-purple text-white shadow-sm"
+                      : "bg-white text-brand-dark border border-[#E3DFC9] hover:bg-stone-50"
+                  }`}
+                >
+                  {inv.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <a
+            href="/program"
+            className="text-xs font-semibold text-brand-purple hover:underline flex items-center gap-1 shrink-0"
+          >
+            Öppna digitala program & veckoplanering →
+          </a>
+        </div>
+      )}
+
       {/* Quick category chips */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 text-xs no-scrollbar">
         <span className="text-brand-darkGrey font-medium whitespace-nowrap">Snabbval:</span>
-        {["Studieteknik", "Stresshantering", "Trygghet", "Om Skolyoga", "NPF", "Sittande", "1 min", "3 min"].map((quick) => {
+        {["6-veckorsinterventioner", "Studieteknik", "Stresshantering", "Trygghet", "NPF", "Sittande", "1 min", "3 min"].map((quick) => {
           const isCat = categories.includes(quick);
           const isDur = durations.includes(quick);
           const isTweak = tweaks.includes(quick);

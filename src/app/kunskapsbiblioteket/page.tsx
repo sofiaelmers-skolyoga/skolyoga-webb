@@ -25,6 +25,7 @@ function KunskapsbibliotekContent() {
   const [selectedDuration, setSelectedDuration] = useState("Alla längder");
   const [selectedGrade, setSelectedGrade] = useState("Alla årskurser");
   const [selectedTweak, setSelectedTweak] = useState(getParamTweak());
+  const [selectedIntervention, setSelectedIntervention] = useState("Alla interventioner");
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
   // Sync state if search params change
@@ -33,6 +34,11 @@ function KunskapsbibliotekContent() {
     if (cat) setSelectedCategory(cat);
     const tweak = searchParams.get("anpassning") || searchParams.get("tag");
     if (tweak) setSelectedTweak(tweak);
+    const inv = searchParams.get("intervention");
+    if (inv) {
+      setSelectedCategory("6-veckorsinterventioner");
+      setSelectedIntervention(inv);
+    }
   }, [searchParams]);
 
   // Connect to Firebase Firestore for real-time updates of all exercises
@@ -64,8 +70,27 @@ function KunskapsbibliotekContent() {
         }
       }
 
-      // Category match (supports both string and array of categories)
-      if (selectedCategory !== "Alla kategorier") {
+      // Category match (supports both string and array of categories, plus 6-veckorsinterventioner)
+      if (selectedCategory === "6-veckorsinterventioner") {
+        const titleLower = ex.title.toLowerCase();
+        const cats = (ex.categories && ex.categories.length > 0 ? ex.categories : [ex.category]).map((c) => c.toLowerCase());
+
+        const isHemmayogaEx = ["nama", "krona", "dunsa", "provsekvensen", "brahmari", "andas i en fyrkant"].some((t) => titleLower.includes(t));
+        const isTrygghetEx = cats.includes("trygghet") || ["trygghet", "känna igen", "självmedkänsla", "gränser", "stormen", "ankare"].some((t) => titleLower.includes(t));
+        const isStudieteknikEx = cats.includes("studieteknik") || cats.includes("fokus") || ["fokus", "flow", "uppmärksamhet", "minne", "koncentration"].some((t) => titleLower.includes(t));
+
+        if (selectedIntervention === "Trygghet") {
+          if (!isTrygghetEx) return false;
+        } else if (selectedIntervention === "Stresshantering") {
+          if (!isHemmayogaEx && !cats.includes("stresshantering")) return false;
+        } else if (selectedIntervention === "Studieteknik") {
+          if (!isStudieteknikEx) return false;
+        } else {
+          if (!isHemmayogaEx && !isTrygghetEx && !isStudieteknikEx && !cats.includes("stresshantering") && !cats.includes("studieteknik") && !cats.includes("trygghet")) {
+            return false;
+          }
+        }
+      } else if (selectedCategory !== "Alla kategorier") {
         const cats = ex.categories && ex.categories.length > 0 ? ex.categories : [ex.category];
         if (!cats.some((c) => c.toLowerCase() === selectedCategory.toLowerCase())) {
           return false;
@@ -101,7 +126,7 @@ function KunskapsbibliotekContent() {
 
       return true;
     });
-  }, [exercises, searchQuery, selectedCategory, selectedDuration, selectedGrade, selectedTweak]);
+  }, [exercises, searchQuery, selectedCategory, selectedDuration, selectedGrade, selectedTweak, selectedIntervention]);
 
   const handleReset = () => {
     setSearchQuery("");
@@ -109,6 +134,7 @@ function KunskapsbibliotekContent() {
     setSelectedDuration("Alla längder");
     setSelectedGrade("Alla årskurser");
     setSelectedTweak("Alla anpassningar");
+    setSelectedIntervention("Alla interventioner");
   };
 
   return (
@@ -140,10 +166,39 @@ function KunskapsbibliotekContent() {
         onGradeChange={setSelectedGrade}
         selectedTweak={selectedTweak}
         onTweakChange={setSelectedTweak}
+        selectedIntervention={selectedIntervention}
+        onInterventionChange={setSelectedIntervention}
         onReset={handleReset}
         totalCount={exercises.length}
         filteredCount={filteredExercises.length}
       />
+
+      {/* 6-veckorsinterventioner spotlight banner */}
+      {selectedCategory === "6-veckorsinterventioner" && (
+        <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border border-[#E3DFC9] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm animate-in fade-in">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/15 text-brand-purple text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-brand-purple" />
+              <span>6-veckorsinterventioner för skolan</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold font-cardo text-brand-dark">
+              {selectedIntervention === "Alla interventioner"
+                ? "Interventioner: Trygghet, Stresshantering & Studieteknik"
+                : `6-veckorsintervention: ${selectedIntervention}`}
+            </h3>
+            <p className="text-sm text-brand-darkGrey max-w-2xl leading-relaxed">
+              Strukturerade program med handledning och anpassade övningar vecka för vecka. Här visas övningarna kopplade till interventionen. Du kan också öppna hela programmet med lektionsplanering.
+            </p>
+          </div>
+          <a
+            href="/program"
+            className="px-6 py-3 rounded-full bg-brand-purple text-white font-semibold text-xs sm:text-sm hover:bg-[#781b61] transition-all shrink-0 shadow-sm flex items-center gap-2"
+          >
+            <span>Öppna hela programmet</span>
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
+      )}
 
       {/* Exercises Grid */}
       {filteredExercises.length > 0 ? (

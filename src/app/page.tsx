@@ -37,17 +37,17 @@ export default function HomePage() {
       {/* HERO SECTION - With authentic background photo from Bilder clearly visible */}
       <section className="relative pt-16 md:pt-24 lg:pt-28 pb-16 md:pb-24 lg:pb-28 overflow-hidden border-b border-[#2C2724]/40 bg-[#181614] text-white">
         
-        {/* Background photo behind hero - Clearly visible, black & white, bright with children's faces centered */}
+        {/* Background photo behind hero - Classroom standing boys */}
         <div className="absolute inset-0 pointer-events-none">
           <Image
-            src="/images/heroes/homepage_photoshoot_maj.jpg"
-            alt="Skolyoga elever i klassrummet från Photoshoot Maj"
+            src="/images/heroes/classroom_standing.jpg"
+            alt="Skolyoga elever i klassrummet"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[50%_24%] grayscale brightness-[1.10] contrast-[1.05]"
+            className="object-cover object-[50%_35%] grayscale brightness-[1.10] contrast-[1.05]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/65" />
         </div>
 
         <div className="relative w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 text-center z-10">
@@ -63,7 +63,7 @@ export default function HomePage() {
                 className="w-full h-full object-contain brightness-200"
               />
             </div>
-            <span>Evidensbaserad metod för klassrummet</span>
+            <span>Evidensbaserad metod för skola och förskola</span>
           </div>
 
           {/* Heading */}
@@ -78,37 +78,10 @@ export default function HomePage() {
             </span>
           </h1>
 
-          {/* Subtitle - Short and punchy */}
+          {/* Subtitle */}
           <p className="mt-6 text-lg sm:text-2xl text-stone-100 max-w-3xl mx-auto leading-relaxed font-normal drop-shadow-sm">
-            Korta rörelse- och fokusövningar för klassrummet. Vi ger elever konkreta verktyg för <strong>självledarskap</strong>, <strong>stresshantering</strong> och <strong>studieteknik</strong> direkt vid skolbänken.
+            Skolyoga är en ideell organisation som ger barn och unga verktyg för stresshantering, studieteknik och trygghet genom kroppsliga övningar anpassade till skolmiljö.
           </p>
-
-          {/* CTA Buttons */}
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/kunskapsbiblioteket"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-purple text-white font-semibold text-base shadow-xl shadow-brand-purple/40 hover:bg-[#781b61] hover:scale-105 transition-all flex items-center justify-center gap-2.5"
-            >
-              <Play className="w-4 h-4 fill-white" />
-              <span>Utforska Kunskapsbiblioteket</span>
-            </Link>
-
-            <Link
-              href="/program"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/95 border border-white/20 text-brand-dark font-semibold text-base hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-lg"
-            >
-              <Sparkles className="w-4 h-4 text-brand-turquoise" />
-              <span>Digitala program</span>
-            </Link>
-
-            <Link
-              href="/utbildningar"
-              className="w-full sm:w-auto px-6 py-4 rounded-full text-white font-semibold text-sm hover:text-[#FFE271] transition-all flex items-center justify-center gap-1.5 drop-shadow-sm"
-            >
-              <span>100h Utbildning</span>
-              <ArrowRight className="w-4 h-4 text-[#FFE271]" />
-            </Link>
-          </div>
 
         </div>
       </section>
@@ -224,11 +197,17 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           
-          {/* Module 1: Studieteknik */}
+          {/* Module 1: Studieteknik (Gul) */}
           <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-6">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-brand-pink/25 text-brand-purple flex items-center justify-center">
-                <Brain className="w-6 h-6 text-brand-purple" />
+              <div className="w-14 h-14 rounded-2xl bg-[#FEF7D9] border border-[#FDE68A] flex items-center justify-center p-2.5">
+                <Image
+                  src="/images/symbols/studieteknik.png"
+                  alt="Studieteknik symbol"
+                  width={44}
+                  height={44}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <h3 className="text-2xl font-bold font-cardo text-brand-dark">Studieteknik</h3>
               <p className="text-sm text-brand-darkGrey leading-relaxed">
@@ -236,32 +215,38 @@ export default function HomePage() {
               </p>
               <ul className="space-y-2 text-sm text-brand-dark pt-2">
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-purple shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D97706] shrink-0" />
                   <span>Flow & djupfokus</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-purple shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D97706] shrink-0" />
                   <span>Riktad uppmärksamhet</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-purple shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D97706] shrink-0" />
                   <span>Mental uthållighet</span>
                 </li>
               </ul>
             </div>
             <div className="pt-4 border-t border-[#EBE8DC]">
-              <Link href="/metoden#studieteknik" className="text-xs font-semibold text-brand-purple flex items-center gap-1.5 hover:underline">
+              <Link href="/metoden#studieteknik" className="text-xs font-semibold text-amber-800 flex items-center gap-1.5 hover:underline">
                 <span>Läs mer om studieteknik</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Module 2: Stresshantering */}
+          {/* Module 2: Stresshantering (Ljusblå) */}
           <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-6">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-brand-turquoise/20 text-brand-turquoise flex items-center justify-center">
-                <TreeDeciduous className="w-6 h-6 text-brand-turquoise" />
+              <div className="w-14 h-14 rounded-2xl bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center p-2.5">
+                <Image
+                  src="/images/symbols/stresshantering.png"
+                  alt="Stresshantering symbol"
+                  width={44}
+                  height={44}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <h3 className="text-2xl font-bold font-cardo text-brand-dark">Stresshantering</h3>
               <p className="text-sm text-brand-darkGrey leading-relaxed">
@@ -269,32 +254,38 @@ export default function HomePage() {
               </p>
               <ul className="space-y-2 text-sm text-brand-dark pt-2">
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-turquoise shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] shrink-0" />
                   <span>Snabb återhämtning</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-turquoise shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] shrink-0" />
                   <span>Medveten närvaro i kroppen</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-turquoise shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] shrink-0" />
                   <span>Nervsystemsreglering</span>
                 </li>
               </ul>
             </div>
             <div className="pt-4 border-t border-[#EBE8DC]">
-              <Link href="/metoden#nervsystemet" className="text-xs font-semibold text-brand-turquoise flex items-center gap-1.5 hover:underline">
+              <Link href="/metoden#nervsystemet" className="text-xs font-semibold text-[#0369A1] flex items-center gap-1.5 hover:underline">
                 <span>Läs mer om stresshantering</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Module 3: Trygghet */}
+          {/* Module 3: Trygghet (Rosa) */}
           <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#E3DFC9] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-6">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-brand-yellow/40 text-amber-800 flex items-center justify-center">
-                <Heart className="w-6 h-6 text-brand-pink fill-brand-pink/30" />
+              <div className="w-14 h-14 rounded-2xl bg-[#FCE7F3] border border-[#FBCFE8] flex items-center justify-center p-2.5">
+                <Image
+                  src="/images/symbols/trygghet.png"
+                  alt="Trygghet symbol"
+                  width={44}
+                  height={44}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <h3 className="text-2xl font-bold font-cardo text-brand-dark">Trygghet</h3>
               <p className="text-sm text-brand-darkGrey leading-relaxed">
@@ -302,21 +293,21 @@ export default function HomePage() {
               </p>
               <ul className="space-y-2 text-sm text-brand-dark pt-2">
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#DB2777] shrink-0" />
                   <span>Känslohantering & självinsikt</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#DB2777] shrink-0" />
                   <span>Växande tankesätt</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#DB2777] shrink-0" />
                   <span>Medkänsla & gemenskap</span>
                 </li>
               </ul>
             </div>
             <div className="pt-4 border-t border-[#EBE8DC]">
-              <Link href="/metoden#trygghet" className="text-xs font-semibold text-amber-800 flex items-center gap-1.5 hover:underline">
+              <Link href="/metoden#trygghet" className="text-xs font-semibold text-[#BE185D] flex items-center gap-1.5 hover:underline">
                 <span>Läs mer om trygghet</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -601,7 +592,7 @@ export default function HomePage() {
                 Skolyoga Konsult & Utbildning
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-cardo text-brand-dark leading-tight">
-                Vill du bli certifierad Skolyogakonsult?
+                Vill du bli Skolyogakonsult?
               </h2>
               <p className="text-brand-darkGrey leading-relaxed text-base sm:text-lg">
                 Vår <strong>100h-utbildning</strong> ger pedagoger, elevhälsa och yogalärare verktyg för att implementera självledarskap, stresshantering och studieteknik i hela skolan.

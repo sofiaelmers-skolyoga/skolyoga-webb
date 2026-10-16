@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" fill="none">
+  <rect width="240" height="80" rx="12" fill="#FFFFFF"/>
+  <g transform="translate(12, 18)">
+    <!-- ICA mark -->
+    <!-- I -->
+    <path d="M4 4H14V40H4V4Z" fill="#E2001A"/>
+    <!-- C arc -->
+    <path d="M22 22C22 12 30 4 40 4C50 4 56 10 58 14L49 19C48 16 45 12 40 12C34.5 12 31.5 16.5 31.5 22C31.5 27.5 34.5 32 40 32C45 32 48 28 49 25L58 30C56 34 50 40 40 40C30 40 22 32 22 22Z" fill="#E2001A"/>
+    <!-- A -->
+    <path d="M64 40L76 4H87L99 40H88.5L86.5 33H76.5L74.5 40H64ZM78.5 26H84.5L81.5 15L78.5 26Z" fill="#E2001A"/>
+    <!-- KVANTUM Vallentuna Text -->
+    <text x="106" y="21" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="14" fill="#E2001A" letter-spacing="1">KVANTUM</text>
+    <text x="106" y="37" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="12" fill="#333333">Vallentuna</text>
+  </g>
+</svg>

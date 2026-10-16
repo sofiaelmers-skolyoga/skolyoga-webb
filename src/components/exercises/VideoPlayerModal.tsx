@@ -36,6 +36,21 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
   const favorited = isFavorite(exercise.id);
   const isLocked = exercise.is_protected && !user;
 
+  const getCategoryColor = (cat: string) => {
+    switch (cat) {
+      case "Stresshantering":
+      case "Stress":
+        return "bg-brand-warmYellow/35 text-[#855B00] border-brand-warmYellow/60";
+      case "Fokus":
+      case "Studieteknik":
+        return "bg-brand-dustyTurquoise/20 text-[#1B6465] border-brand-dustyTurquoise/40";
+      case "Trygghet":
+        return "bg-brand-dustyPink/25 text-[#9D2866] border-brand-dustyPink/50";
+      default:
+        return "bg-brand-sand text-brand-dark border-[#D5D0BE]";
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
       
@@ -48,7 +63,7 @@ export function VideoPlayerModal({ exercise, onClose }: VideoPlayerModalProps) {
         {/* Top Header bar */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#EBE8DC] bg-brand-sand">
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-brand-dustyPink/20 text-brand-dustyPurple border border-brand-dustyPink/40">
+            <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${getCategoryColor(exercise.category)}`}>
               {exercise.category}
             </span>
             <span className="text-xs text-brand-darkGrey font-medium flex items-center gap-1">

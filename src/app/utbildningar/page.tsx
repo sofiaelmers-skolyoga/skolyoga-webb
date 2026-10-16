@@ -187,11 +187,11 @@ export default function UtbildningarPage() {
           <div className="bg-white rounded-3xl border border-[#E3DFC9] shadow-sm overflow-hidden flex flex-col justify-between">
             <div className="relative aspect-video w-full bg-brand-sand overflow-hidden">
               <Image
-                src="/images/photos/photo_14.jpg"
+                src="/images/heroes/photoshoot_2279.jpg"
                 alt="Skolyoga i grundskolan och gymnasiet"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover"
+                className="object-cover object-[center_35%]"
               />
             </div>
             <div className="p-7 space-y-4 flex-1 flex flex-col justify-between">
@@ -225,11 +225,11 @@ export default function UtbildningarPage() {
           <div className="bg-white rounded-3xl border border-[#E3DFC9] shadow-sm overflow-hidden flex flex-col justify-between">
             <div className="relative aspect-video w-full bg-brand-sand overflow-hidden">
               <Image
-                src="/images/photos/photo_15.jpg"
+                src="/images/heroes/konsult_utbildning_card.jpg"
                 alt="Hälsofrämjande event för personal"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover"
+                className="object-cover object-[center_30%]"
               />
             </div>
             <div className="p-7 space-y-4 flex-1 flex flex-col justify-between">

@@ -32,7 +32,7 @@ const featuredTeam: TeamMember[] = [
     name: "Annika Westerberg",
     role: "Verksamhetsledare",
     image: "/images/team/annika.jpg",
-    bio: "Civilekonom från Handelshögskolan i Stockholm. Utbildade sig till yogalärare för vuxna och barn 2015/16. Annika driver Skolyogas operativa utveckling och arbetar dedikerat för att integrera kroppsbaserade övningar i klassrum och förskolor runtom i Sverige.",
+    bio: "Civilekonom från Handelshögskolan i Stockholm, utbildad lärare via Teach for Sweden samt yogalärare för barn och vuxna.\n\nSom verksamhetsledare driver Annika Skolyogas strategiska utveckling med övergripande ansvar för verksamhetens riktning, ekonomi och långsiktiga hållbarhet.",
     quote: "Jag tror att vi alla – unga som gamla – mår bättre av att praktisera yoga. Jag brinner för att få in yoga i alla sammanhang där det blir lättillgängligt och en naturlig del av vardagen. Genom Skolyoga vill jag bidra till att sprida yoga till det ställe där framtidens ledare skapas; alla fantastiska skolor och förskolor runt om i Sverige.",
     badgeColor: "text-brand-dustyTurquoise",
   },
@@ -124,7 +124,7 @@ export default function OmSkolyogaPage() {
         badge="Vision & Förhållningssätt"
         badgeIcon={<Sparkles className="w-3.5 h-3.5" />}
         title="Om Skolyoga"
-        description="Vi ger barn och unga tillgång till självledarskap och egenmakt – förmågan att förstå kroppen, reglera stress och bygga trygghet i sig själva och i klassrummet."
+        description="Vi ger barn och unga tillgång till självledarskap – förmågan att förstå kroppen, reglera stress och bygga trygghet i sig själva och i klassrummet."
         bgImage="/images/heroes/hero_satanama.jpg"
         bgAlt="Elever utomhus som utövar skolyoga och mudras"
         align="center"
@@ -133,11 +133,11 @@ export default function OmSkolyogaPage() {
 
       <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-16">
 
-      {/* Vision & "Kroppen som verktyg - Självledarskap och egenmakt" */}
+      {/* "Kroppen som verktyg - Självledarskap" */}
       <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-14 border border-[#E3DFC9] shadow-sm space-y-6 sm:space-y-8 text-brand-dark leading-relaxed text-sm sm:text-base overflow-hidden">
         <div className="max-w-3xl space-y-3 sm:space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-dustyTurquoise/20 text-[#2B7A78] text-xs font-bold uppercase tracking-wider">
-            <span>Självledarskap & Egenmakt</span>
+            <span>Självledarskap</span>
           </div>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-cardo text-brand-dark break-words">
             Kroppen som verktyg – inte bara rörelse
@@ -150,7 +150,7 @@ export default function OmSkolyogaPage() {
           <p className="text-brand-darkGrey text-sm sm:text-base leading-relaxed break-words">
             Genom att förstå hur kroppen fungerar kan vi ge barn och unga verktyg för att själva medvetet 
             skifta sinnesstämning och stärka sin resiliens. När vi lär oss att reglera kroppen, lär vi oss 
-            också att reglera våra tankar och känslor. Det skapar en genuin känsla av egenmakt: barn och 
+            också att reglera våra tankar och känslor. Det stärker barn och ungas självledarskap: barn och 
             unga går från att vara utlämnade till sina impulser till att aktivt kunna styra sitt fokus, sitt lugn och sin energi.
           </p>
         </div>
@@ -177,15 +177,11 @@ export default function OmSkolyogaPage() {
           </div>
         </div>
 
-        {/* Vision & Mission - Exact copy from Skolyoga.se */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-[#EBE8DC]">
-          <div className="p-6 rounded-2xl bg-white border border-[#E3DFC9] space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-dustyPurple">Vår Vision</span>
-            <h3 className="text-xl sm:text-2xl font-bold font-cardo text-brand-dark">Alla barn ska få ta del av skolyoga.</h3>
-          </div>
-          <div className="p-6 rounded-2xl bg-white border border-[#E3DFC9] space-y-2">
+        {/* Mission */}
+        <div className="pt-6 border-t border-[#EBE8DC]">
+          <div className="p-6 sm:p-8 rounded-2xl bg-brand-sand/60 border border-[#E3DFC9] space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-dustyTurquoise">Vår Mission</span>
-            <p className="text-sm sm:text-base text-brand-dark leading-relaxed">
+            <p className="text-base sm:text-lg text-brand-dark leading-relaxed font-medium">
               Vi stärker lärande och välmående i skolan och förskolan genom övningar som tränar självledarskap, stresshantering, trygghet och studieteknik.
             </p>
           </div>
@@ -238,7 +234,7 @@ export default function OmSkolyogaPage() {
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-brand-darkGrey leading-relaxed break-words">
+                  <p className="text-xs sm:text-sm text-brand-darkGrey leading-relaxed break-words whitespace-pre-line">
                     {member.bio}
                   </p>
 

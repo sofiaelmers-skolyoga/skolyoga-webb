@@ -17,17 +17,17 @@ export function ExerciseCard({ exercise, onSelect, showPopularBadge }: ExerciseC
   const { user, isFavorite, toggleFavorite } = useAuth();
   const favorited = isFavorite(exercise.id);
 
-  // Category badge colors from official visual manual
+  // Category badge colors: Fokus/Studieteknik = turkos, Stress = gul, Trygghet = rosa
   const getCategoryColor = (cat: string) => {
     switch (cat) {
       case "Stresshantering":
-        return "bg-brand-dustyPink/25 text-brand-dustyPurple border-brand-dustyPink/50";
+      case "Stress":
+        return "bg-brand-warmYellow/35 text-[#855B00] border-brand-warmYellow/60";
       case "Fokus":
-        return "bg-brand-warmYellow/35 text-[#735100] border-brand-warmYellow/70";
       case "Studieteknik":
-        return "bg-brand-dustyTurquoise/25 text-[#1B6465] border-brand-dustyTurquoise/50";
+        return "bg-brand-dustyTurquoise/20 text-[#1B6465] border-brand-dustyTurquoise/40";
       case "Trygghet":
-        return "bg-brand-dustyPink/20 text-[#8C2272] border-brand-dustyPink/40";
+        return "bg-brand-dustyPink/25 text-[#9D2866] border-brand-dustyPink/50";
       case "Om Skolyoga":
         return "bg-brand-sand text-brand-dark border-[#D5D0BE]";
       default:

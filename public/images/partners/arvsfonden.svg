@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" fill="none">
+  <rect width="240" height="80" rx="12" fill="#FFFFFF"/>
+  <g transform="translate(20, 24)">
+    <rect x="0" y="2" width="28" height="28" rx="6" fill="#005A36"/>
+    <path d="M7 22L14 8L21 22H7Z" fill="#F8C300"/>
+    <text x="38" y="14" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="14" fill="#005A36" letter-spacing="0.5">ARVSFONDEN</text>
+    <text x="38" y="27" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="10" fill="#555555">Allmänna Arvsfonden</text>
+  </g>
+</svg>

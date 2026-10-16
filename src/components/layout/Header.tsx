@@ -45,7 +45,7 @@ export function Header() {
                 Skolyoga
               </span>
               <span className="text-[10px] uppercase tracking-[0.2em] text-brand-darkGrey font-medium -mt-1">
-                Stresshantering & Studieteknik
+                Trygghet, Stresshantering & Studieteknik
               </span>
             </div>
           </Link>
