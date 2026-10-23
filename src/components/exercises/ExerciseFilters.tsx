@@ -230,6 +230,19 @@ export function ExerciseFilters({
             (isDur && selectedDuration === quick) ||
             (isTweak && selectedTweak === quick);
 
+          const getChipStyle = () => {
+            if (!isSelected) {
+              if (quick === "Studieteknik") return "bg-[#70B9BA]/10 text-[#1B6465] border-[#70B9BA]/40 hover:bg-[#70B9BA]/20";
+              if (quick === "Stresshantering") return "bg-brand-warmYellow/15 text-[#855B00] border-brand-warmYellow/40 hover:bg-brand-warmYellow/25";
+              if (quick === "Trygghet") return "bg-brand-dustyPink/15 text-[#9D2866] border-brand-dustyPink/40 hover:bg-brand-dustyPink/25";
+              return "bg-brand-sand text-stone-700 border-[#E3DFC9] hover:border-brand-dustyPurple/40";
+            }
+            if (quick === "Studieteknik") return "bg-[#70B9BA] text-white border-[#70B9BA] shadow-sm font-bold";
+            if (quick === "Stresshantering") return "bg-[#FFE271] text-[#6E4900] border-[#E5C84A] shadow-sm font-bold";
+            if (quick === "Trygghet") return "bg-[#E29B9D] text-white border-[#E29B9D] shadow-sm font-bold";
+            return "bg-brand-dustyPurple text-white border-brand-dustyPurple shadow-sm font-bold";
+          };
+
           return (
             <button
               key={quick}
@@ -238,11 +251,7 @@ export function ExerciseFilters({
                 if (isDur) onDurationChange(selectedDuration === quick ? "Alla längder" : quick);
                 if (isTweak) onTweakChange(selectedTweak === quick ? "Alla anpassningar" : quick);
               }}
-              className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors border font-medium ${
-                isSelected
-                  ? "bg-brand-dustyPurple text-white border-brand-dustyPurple shadow-sm"
-                  : "bg-brand-sand text-stone-700 border-[#E3DFC9] hover:border-brand-dustyPurple/40"
-              }`}
+              className={`px-3 py-1 rounded-full whitespace-nowrap transition-all border font-medium ${getChipStyle()}`}
             >
               {quick}
             </button>

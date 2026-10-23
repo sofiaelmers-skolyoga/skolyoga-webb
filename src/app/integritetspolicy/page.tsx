@@ -58,7 +58,7 @@ export default function IntegritetspolicyPage() {
             Uppgifterna används uteslutande för att:
           </p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Tillhandahålla och administrera ditt konto och inloggning till övningsbanken.</li>
+            <li>Tillhandahålla och administrera ditt konto och inloggning till kunskapsbiblioteket.</li>
             <li>Synkronisera sparade övningar och progression mellan webb och mobilapp.</li>
             <li>Hantera kursanmälningar till 100h-utbildningen och studiedagar.</li>
             <li>Kommunicera information och nyheter gällande Skolyogas verksamhet.</li>

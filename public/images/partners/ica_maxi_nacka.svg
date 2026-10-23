@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" fill="none">
   <rect width="240" height="80" rx="12" fill="#FFFFFF"/>
-  <g transform="translate(16, 18)">
+  <g transform="translate(14, 18)">
     <!-- ICA mark -->
-    <path d="M0 4H10V40H0V4Z" fill="#E2001A"/>
-    <path d="M18 4H42C44.5 4 46.5 6 46.5 8.5V13.5C46.5 16 44.5 18 42 18H28V26H42C44.5 26 46.5 28 46.5 30.5V35.5C46.5 38 44.5 40 42 40H18V4Z" fill="#E2001A"/>
+    <!-- I -->
+    <path d="M4 4H14V40H4V4Z" fill="#E2001A"/>
     <!-- C arc -->
-    <path d="M54 22C54 12 62 4 72 4C82 4 88 10 90 14L81 19C80 16 77 12 72 12C66.5 12 63.5 16.5 63.5 22C63.5 27.5 66.5 32 72 32C77 32 80 28 81 25L90 30C88 34 82 40 72 40C62 40 54 32 54 22Z" fill="#E2001A"/>
+    <path d="M22 22C22 12 30 4 40 4C50 4 56 10 58 14L49 19C48 16 45 12 40 12C34.5 12 31.5 16.5 31.5 22C31.5 27.5 34.5 32 40 32C45 32 48 28 49 25L58 30C56 34 50 40 40 40C30 40 22 32 22 22Z" fill="#E2001A"/>
     <!-- A -->
-    <path d="M96 40L108 4H119L131 40H120.5L118.5 33H108.5L106.5 40H96ZM110.5 26H116.5L113.5 15L110.5 26Z" fill="#E2001A"/>
+    <path d="M64 40L76 4H87L99 40H88.5L86.5 33H76.5L74.5 40H64ZM78.5 26H84.5L81.5 15L78.5 26Z" fill="#E2001A"/>
     <!-- MAXI Nacka Text -->
-    <text x="138" y="22" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="16" fill="#E2001A" letter-spacing="1">MAXI</text>
-    <text x="138" y="38" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="13" fill="#333333">Nacka</text>
+    <text x="108" y="22" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="16" fill="#E2001A" letter-spacing="1">MAXI</text>
+    <text x="108" y="38" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="13" fill="#333333">Nacka</text>
   </g>
 </svg>

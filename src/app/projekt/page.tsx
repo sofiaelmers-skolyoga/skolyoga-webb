@@ -83,7 +83,7 @@ const projects: Project[] = [
     period: "2020 – 2023",
     targetGroup: "Högstadiet & Gymnasiet",
     summary:
-      "Grundutvecklingen av Skolyogas digitala övningsbank och metodbibliotek för skolor i hela Sverige.",
+      "Grundutvecklingen av Skolyogas digitala kunskapsbibliotek och metodbibliotek för skolor i hela Sverige.",
     description:
       "Projektet möjliggjorde skapandet av över 125 instruktionsfilmer, pedagogiska manualer och digitala verktyg som idag används dagligen av tusentals pedagoger för att skapa studieteknik och minska skolstress.",
     badgeColor: "bg-brand-purple/15 text-brand-purple",

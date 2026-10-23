@@ -77,7 +77,7 @@ export function NewsletterSection() {
               </div>
 
               <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark tracking-tight leading-tight">
-                Få konkreta verktyg för studieteknik & nervsystemsreglering
+                Få konkreta övningar för välmående i skolan och förskolan
               </h2>
 
               <p className="mt-4 text-brand-darkGrey text-base leading-relaxed">

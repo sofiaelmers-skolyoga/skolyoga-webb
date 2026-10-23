@@ -73,20 +73,54 @@ function KunskapsbibliotekContent() {
       // Category match (supports both string and array of categories, plus 6-veckorsinterventioner)
       if (selectedCategory === "6-veckorsinterventioner") {
         const titleLower = ex.title.toLowerCase();
-        const cats = (ex.categories && ex.categories.length > 0 ? ex.categories : [ex.category]).map((c) => c.toLowerCase());
+        const slugLower = ex.slug.toLowerCase();
 
-        const isHemmayogaEx = ["nama", "krona", "dunsa", "provsekvensen", "brahmari", "andas i en fyrkant"].some((t) => titleLower.includes(t));
-        const isTrygghetEx = cats.includes("trygghet") || ["trygghet", "känna igen", "självmedkänsla", "gränser", "stormen", "ankare"].some((t) => titleLower.includes(t));
-        const isStudieteknikEx = cats.includes("studieteknik") || cats.includes("fokus") || ["fokus", "flow", "uppmärksamhet", "minne", "koncentration"].some((t) => titleLower.includes(t));
+        // Exact 6-week intervention lists defined in Trello specification
+        const stressItems = [
+          "kroppsräkning", "kroppsrakning",
+          "fysiologiska sucken",
+          "korsande avspänning", "korsande-avspanning",
+          "korsrytm",
+          "gemensam storm", "storm",
+          "dunsa",
+          "biandning",
+          "paussucken", "suckar",
+          "växelvisandning", "vaxelvisandning"
+        ];
+        const studieItems = [
+          "nama",
+          "pilbågen", "pilbagen",
+          "nama med ramsa",
+          "nama med svep",
+          "regndroppar",
+          "omstart",
+          "trädet", "tradet",
+          "sinnet", "sinnesträning", "sinnestraning",
+          "andas i en fyrkant", "kvadrat"
+        ];
+        const tryggItems = [
+          "tumme möter tumme", "tumme-moter-tumme",
+          "korsklapp",
+          "fysiologiska sucken",
+          "pennan",
+          "pennan med kompis",
+          "tumme möter tumme med kompis",
+          "roboten",
+          "gemensamma andetag"
+        ];
+
+        const isStressEx = stressItems.some((term) => titleLower.includes(term) || slugLower.includes(term));
+        const isStudieEx = studieItems.some((term) => titleLower.includes(term) || slugLower.includes(term));
+        const isTryggEx = tryggItems.some((term) => titleLower.includes(term) || slugLower.includes(term));
 
         if (selectedIntervention === "Trygghet") {
-          if (!isTrygghetEx) return false;
+          if (!isTryggEx) return false;
         } else if (selectedIntervention === "Stresshantering") {
-          if (!isHemmayogaEx && !cats.includes("stresshantering")) return false;
+          if (!isStressEx) return false;
         } else if (selectedIntervention === "Studieteknik") {
-          if (!isStudieteknikEx) return false;
+          if (!isStudieEx) return false;
         } else {
-          if (!isHemmayogaEx && !isTrygghetEx && !isStudieteknikEx && !cats.includes("stresshantering") && !cats.includes("studieteknik") && !cats.includes("trygghet")) {
+          if (!isStressEx && !isStudieEx && !isTryggEx) {
             return false;
           }
         }
