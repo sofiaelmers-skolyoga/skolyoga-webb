@@ -23,6 +23,7 @@ import { ExerciseCard } from "@/components/exercises/ExerciseCard";
 import { VideoPlayerModal } from "@/components/exercises/VideoPlayerModal";
 import { InstagramFeed } from "@/components/InstagramFeed";
 import { NewsletterSection } from "@/components/NewsletterSection";
+import { ImpactTracker } from "@/components/ImpactTracker";
 import { Exercise } from "@/types";
 import { useAuth } from "@/context/AuthContext";
 
@@ -154,32 +155,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* STATS & IMPACT SECTION - Wide */}
-      <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
-        <div className="bg-brand-sand rounded-3xl border border-[#E3DFC9] p-8 sm:p-14 text-center space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E3DFC9] text-xs font-bold text-brand-purple uppercase tracking-wider">
-            <span>Vår Räckvidd</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-cardo text-brand-dark max-w-4xl mx-auto">
-            Över 9 200 barn och unga har fått ta del av Skolyoga under 2025
-          </h2>
-          <p className="text-base sm:text-lg text-brand-darkGrey max-w-2xl mx-auto leading-relaxed">
-            Läs vår effektrapport för att se hur evidensbaserade mikropauser sänker stress och stärker klassrumsklimatet i skolor över hela Sverige.
-          </p>
-          <div className="pt-2">
-            <a
-              href="/documents/Skolyoga-Effektrapport-2025.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm shadow hover:bg-[#781b61] transition-all"
-            >
-              <FileText className="w-4 h-4" />
-              <span>Läs Effektrapport 2025 (PDF)</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* STATS & IMPACT SECTION - Dynamic from Google Sheets */}
+      <ImpactTracker />
 
       {/* THREE MODULES: STUDIETEKNIK, STRESSHANTERING, TRYGGHET */}
       <section className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
