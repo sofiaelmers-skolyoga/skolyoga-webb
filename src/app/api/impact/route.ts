@@ -46,6 +46,10 @@ function parseCSV(csvText: string): string[][] {
 }
 
 export async function GET() {
+  // Conservative baseline for 2012–2024 before systematic logging was established
+  const historic2012_2024 = 45000;
+  const base2025 = 9200;
+
   try {
     const res = await fetch(SHEET_CSV_URL, {
       next: { revalidate: 600 }, // Revalidate every 10 minutes
@@ -99,9 +103,6 @@ export async function GET() {
       }
     }
 
-    // Historical baseline from official reports
-    // 2025: 9 200 barn och unga (from Effektrapport 2025)
-    const base2025 = 9200;
     const currentYear = new Date().getFullYear().toString();
     const currentYearStats = yearlyData[currentYear] || {
       year: currentYear,
@@ -110,16 +111,29 @@ export async function GET() {
       events: totalEvents,
     };
 
-    const cumulativeTotal = totalSpreadFromSheet + base2025;
+    // Documented period (2025 + 2026 live)
+    const documentedTotal = totalSpreadFromSheet + base2025;
+    // Grand total since founding in 2012
+    const allTimeTotal = historic2012_2024 + documentedTotal;
 
     const years = [
       {
+        year: "2012 – 2024",
+        spread: historic2012_2024,
+        participants: 1200,
+        events: 160,
+        status: "Konservativ schablon",
+        label: "Uppbyggnad & tidiga år",
+        notes: "Uppskattad räckvidd under Skolyogas första 12 år",
+      },
+      {
         year: "2025",
-        spread: 9200,
+        spread: base2025,
         participants: 280,
         events: 18,
         status: "Slutfört",
         label: "Effektrapport 2025",
+        notes: "Fastställt i officiell effektutvärdering",
       },
       {
         year: currentYear,
@@ -127,13 +141,16 @@ export async function GET() {
         participants: currentYearStats.participants,
         events: currentYearStats.events,
         status: "Pågående",
-        label: "Hittills under året",
+        label: "Hittills under 2026",
+        notes: "Live från evenemangsloggen i Google Sheets",
       },
     ];
 
     return NextResponse.json({
       success: true,
-      cumulativeTotal,
+      allTimeTotal,
+      documentedTotal,
+      historic2012_2024,
       currentYear,
       currentYearSpread: currentYearStats.spread,
       currentYearParticipants: currentYearStats.participants,
@@ -145,10 +162,14 @@ export async function GET() {
   } catch (error: any) {
     console.error("Error fetching Google Sheet impact data:", error);
 
-    // Resilient fallback values so page never fails or shows empty
+    const documentedTotal = 22002 + base2025;
+    const allTimeTotal = historic2012_2024 + documentedTotal;
+
     return NextResponse.json({
       success: true,
-      cumulativeTotal: 31202,
+      allTimeTotal,
+      documentedTotal,
+      historic2012_2024,
       currentYear: "2026",
       currentYearSpread: 22002,
       currentYearParticipants: 512,
@@ -156,12 +177,22 @@ export async function GET() {
       growthPercent: 139,
       years: [
         {
+          year: "2012 – 2024",
+          spread: historic2012_2024,
+          participants: 1200,
+          events: 160,
+          status: "Konservativ schablon",
+          label: "Uppbyggnad & tidiga år",
+          notes: "Uppskattad räckvidd under Skolyogas första 12 år",
+        },
+        {
           year: "2025",
-          spread: 9200,
+          spread: base2025,
           participants: 280,
           events: 18,
           status: "Slutfört",
           label: "Effektrapport 2025",
+          notes: "Fastställt i officiell effektutvärdering",
         },
         {
           year: "2026",
@@ -169,7 +200,8 @@ export async function GET() {
           participants: 512,
           events: 21,
           status: "Pågående",
-          label: "Hittills under året",
+          label: "Hittills under 2026",
+          notes: "Live från evenemangsloggen i Google Sheets",
         },
       ],
       updatedAt: new Date().toISOString(),
