@@ -12,16 +12,25 @@ export function Header() {
   const pathname = usePathname();
   const { user, favorites, progress, logout } = useAuth();
 
-  const navLinks: Array<{ name: string; href: string }> = [
+  const loggedInLinks: Array<{ name: string; href: string }> = [
     { name: "Kunskapsbiblioteket", href: "/kunskapsbiblioteket" },
     { name: "Program", href: "/program" },
-    { name: "Utbildningar", href: "/utbildningar" },
+    { name: "Utbildningar (100h)", href: "/utbildningar" },
     { name: "Metoden", href: "/metoden" },
-    { name: "Shop", href: "/shop" },
-    { name: "Stöd oss", href: "/stod-oss" },
-    { name: "Projekt", href: "/projekt" },
+    { name: "Projekt & Effekt", href: "/projekt" },
     { name: "Om Skolyoga", href: "/om-skolyoga" },
   ];
+
+  const loggedOutLinks: Array<{ name: string; href: string }> = [
+    { name: "För skola & förskola", href: "/?malgrupp=skola#malgrupp" },
+    { name: "Utbildningar (100h)", href: "/utbildningar" },
+    { name: "Metoden", href: "/metoden" },
+    { name: "För finansiärer & projekt", href: "/projekt" },
+    { name: "Stöd oss", href: "/stod-oss" },
+    { name: "Om Skolyoga", href: "/om-skolyoga" },
+  ];
+
+  const navLinks = user ? loggedInLinks : loggedOutLinks;
 
   return (
     <header className="sticky top-0 z-40 bg-brand-sand/95 backdrop-blur-md border-b border-[#E3DFC9] transition-all">
@@ -53,7 +62,8 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav aria-label="Huvudmeny" className="hidden xl:flex items-center gap-6">
             {navLinks.map((link) => {
-              const isActive = pathname.startsWith(link.href);
+              const cleanHref = link.href.split("?")[0].split("#")[0];
+              const isActive = cleanHref !== "/" && pathname.startsWith(cleanHref);
               return (
                 <Link
                   key={link.href}
@@ -110,13 +120,19 @@ export function Header() {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <Link
                   href="/logga-in"
+                  className="px-4 py-2 rounded-full bg-white border border-[#D5D0BE] text-brand-dark text-xs font-semibold hover:bg-stone-50 transition-all cursor-pointer"
+                >
+                  Logga in
+                </Link>
+                <Link
+                  href="/logga-in?tab=register"
                   className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-purple text-white text-xs font-semibold hover:bg-[#781b61] transition-all shadow-sm cursor-pointer"
                 >
                   <User className="w-3.5 h-3.5" />
-                  <span>Logga in</span>
+                  <span>Skapa gratis konto</span>
                 </Link>
               </div>
             )}
@@ -126,11 +142,11 @@ export function Header() {
           <div className="flex xl:hidden items-center gap-2">
             {!user ? (
               <Link
-                href="/logga-in"
+                href="/logga-in?tab=register"
                 className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-purple text-white text-xs font-semibold shadow-sm hover:bg-[#781b61] transition-all"
               >
                 <User className="w-3.5 h-3.5" />
-                <span>Logga in</span>
+                <span>Gratis konto</span>
               </Link>
             ) : (
               <Link
@@ -228,11 +244,18 @@ export function Header() {
             ) : (
               <div className="space-y-2">
                 <Link
-                  href="/logga-in"
+                  href="/logga-in?tab=register"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-brand-purple text-white font-semibold text-sm shadow-md"
                 >
                   <User className="w-4 h-4" />
+                  <span>Skapa gratis konto</span>
+                </Link>
+                <Link
+                  href="/logga-in"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-brand-sand text-brand-dark border border-[#D5D0BE] font-semibold text-sm"
+                >
                   <span>Logga in</span>
                 </Link>
               </div>

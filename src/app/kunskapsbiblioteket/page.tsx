@@ -1,20 +1,23 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, Suspense } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { allExercises } from "@/lib/exercises";
 import {
   subscribeToFirestoreExercises,
-  seedExercisesToFirestore,
 } from "@/lib/firebaseExercises";
 import { ExerciseCard } from "@/components/exercises/ExerciseCard";
 import { ExerciseFilters } from "@/components/exercises/ExerciseFilters";
 import { VideoPlayerModal } from "@/components/exercises/VideoPlayerModal";
 import { Exercise } from "@/types";
-import { BookOpen, Download, FileText, ExternalLink, Sparkles } from "lucide-react";
+import { BookOpen, Download, FileText, ExternalLink, Sparkles, Lock, CheckCircle2, Award, ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
+import { useAuth } from "@/context/AuthContext";
+import { LoginFormCard } from "@/components/auth/LoginFormCard";
 
 function KunskapsbibliotekContent() {
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const getParamCategory = () => searchParams.get("kategori") || searchParams.get("category") || "Alla kategorier";
   const getParamTweak = () => searchParams.get("anpassning") || searchParams.get("tag") || "Alla anpassningar";
@@ -75,7 +78,6 @@ function KunskapsbibliotekContent() {
         const titleLower = ex.title.toLowerCase();
         const slugLower = ex.slug.toLowerCase();
 
-        // Exact 6-week intervention lists defined in Trello specification
         const stressItems = [
           "kroppsräkning", "kroppsrakning",
           "fysiologiska sucken",
@@ -171,6 +173,80 @@ function KunskapsbibliotekContent() {
     setSelectedIntervention("Alla interventioner");
   };
 
+  // GATED VIEW WHEN NOT LOGGED IN
+  if (!user) {
+    return (
+      <div className="space-y-12 pb-20">
+        <PageHero
+          badge="Kostnadsfritt för skolpersonal"
+          badgeIcon={<Lock className="w-3.5 h-3.5" />}
+          title="Skapa ett gratis konto för att öppna Kunskapsbiblioteket"
+          description="Som lärare, förskollärare, elevhälsa eller skolledare får du kostnadsfri tillgång till över 125 filmade övningar, mikropauser och lärarhandledningar."
+          bgImage="/images/heroes/classroom_stretching.jpg"
+          bgAlt="Elever i klassrummet som stretchar och gör yoga"
+          align="center"
+          objectPosition="object-[center_22%]"
+        />
+
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Left column: What you get */}
+            <div className="lg:col-span-5 bg-white rounded-3xl border border-[#E3DFC9] p-8 sm:p-10 shadow-sm space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-turquoise/15 text-brand-dark text-xs font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-brand-turquoise" />
+                <span>Allt detta ingår gratis</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+                Fungerar direkt i klassrummet och förskolan
+              </h2>
+              <p className="text-sm sm:text-base text-brand-darkGrey leading-relaxed">
+                Övningarna kräver varken förkunskaper, ombyte eller yogamattor. Starta en film på 1–5 minuter direkt på projektorn eller i samlingen.
+              </p>
+
+              <ul className="space-y-3.5 pt-2">
+                {[
+                  "Över 125 instruktionsfilmer för förskola, grundskola och gymnasium",
+                  "Filtrera på syfte: Studieteknik, Stresshantering och Trygghet",
+                  "Anpassat material med bildstöd, NPF-anpassningar och anpassad skola",
+                  "Nedladdningsbara PDF-handledningar för lärare och elevhälsa",
+                  "Spara dina favoritövningar och synka med Skolyoga-appen",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-brand-dark">
+                    <CheckCircle2 className="w-5 h-5 text-brand-turquoise shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="p-5 rounded-2xl bg-brand-sand border border-[#E3DFC9] space-y-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-brand-purple">
+                  Vill ni ha hjälp med implementering?
+                </div>
+                <p className="text-xs text-brand-darkGrey leading-relaxed">
+                  Utöver vårt kostnadsfria bibliotek erbjuder vi vår populära <strong>100h-utbildning</strong> och praktiska workshops för hela personalgruppen.
+                </p>
+                <Link
+                  href="/utbildningar"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-purple hover:underline pt-1"
+                >
+                  <span>Läs mer om våra utbildningar</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right column: Registration / Login Card */}
+            <div className="lg:col-span-7">
+              <LoginFormCard initialTab="register" />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-10 pb-20">
       
@@ -224,13 +300,13 @@ function KunskapsbibliotekContent() {
               Strukturerade program med handledning och anpassade övningar vecka för vecka. Här visas övningarna kopplade till interventionen. Du kan också öppna hela programmet med lektionsplanering.
             </p>
           </div>
-          <a
+          <Link
             href="/program"
             className="px-6 py-3 rounded-full bg-brand-purple text-white font-semibold text-xs sm:text-sm hover:bg-[#781b61] transition-all shrink-0 shadow-sm flex items-center gap-2"
           >
             <span>Öppna hela programmet</span>
             <ExternalLink className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
       )}
 
@@ -263,8 +339,41 @@ function KunskapsbibliotekContent() {
         </div>
       )}
 
+      {/* UPSELL BANNER FOR LOGGED-IN SCHOOL STAFF: 100h Training & Implementation */}
+      <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border-2 border-brand-purple/25 p-8 sm:p-12 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-8 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-pink/25 text-brand-purple text-xs font-bold uppercase tracking-wider">
+              <Award className="w-3.5 h-3.5" />
+              <span>Nästa steg för dig och din skola</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-cardo text-brand-dark">
+              Vill du ha mer och få hjälp att implementera övningarna?
+            </h2>
+            <p className="text-sm sm:text-base text-brand-darkGrey leading-relaxed max-w-2xl">
+              När du har börjat använda övningarna i vardagen kan du fördjupa din kunskap genom vår <strong>100h-utbildning till Skolyogakonsult</strong> eller boka en <strong>praktisk workshop</strong> för ditt arbetslag. Då får ni verktygen för att implementera studiero, trygghet och proaktivt hälsoarbete i hela skolan eller förskolan.
+            </p>
+          </div>
+          <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
+            <Link
+              href="/utbildningar"
+              className="px-6 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm hover:bg-[#781b61] transition-all shadow-sm text-center flex items-center justify-center gap-2"
+            >
+              <span>Läs om 100h-utbildningen</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/kontakt"
+              className="px-6 py-3.5 rounded-full bg-white border border-[#D5D0BE] text-brand-dark font-semibold text-sm hover:bg-stone-50 transition-all text-center"
+            >
+              Få hjälp med implementering
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* ANALOGT MATERIAL & HANDLEDNINGAR (PDF) */}
-      <div id="analogt-material" className="mt-20 pt-16 border-t border-[#E3DFC9] space-y-8">
+      <div id="analogt-material" className="mt-16 pt-12 border-t border-[#E3DFC9] space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-dustyTurquoise/20 text-[#1B6465] text-xs font-bold uppercase tracking-wider mb-2">

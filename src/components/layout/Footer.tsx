@@ -4,7 +4,10 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, Instagram, Facebook, Youtube, Mail, Smartphone, ArrowRight, ShieldCheck, Sparkles, Accessibility } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+
 export function Footer() {
+  const { user } = useAuth();
 
   return (
     <footer aria-label="Sidfot" className="bg-[#2D2D2C] text-[#E0DDD5] pt-16 pb-12 border-t border-[#4A4A48]">
@@ -65,35 +68,45 @@ export function Footer() {
 
           </div>
 
-          {/* Col 2: Utbildningar & Program */}
+          {/* Col 2: För Skola & Finansiärer */}
           <div className="space-y-3">
             <h4 className="text-xs font-semibold text-brand-yellow uppercase tracking-wider">Verksamhet</h4>
             <ul className="space-y-2 text-sm text-[#D1CCC2]">
-              <li>
-                <Link href="/program" className="hover:text-brand-turquoise transition-colors flex items-center gap-1">
-                  <span>Digitala Program</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-yellow/30 text-amber-200">Nytt</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/program/yTk3wFhl1s011CoBYPpY" className="hover:text-brand-turquoise transition-colors">
-                  Hemmayoga (6 veckor)
-                </Link>
-              </li>
+              {user ? (
+                <>
+                  <li>
+                    <Link href="/kunskapsbiblioteket" className="hover:text-brand-turquoise transition-colors">
+                      Kunskapsbiblioteket
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/program" className="hover:text-brand-turquoise transition-colors flex items-center gap-1">
+                      <span>Digitala Program</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-yellow/30 text-amber-200">Inloggad</span>
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link href="/logga-in?tab=register" className="hover:text-brand-turquoise transition-colors flex items-center gap-1 font-semibold text-white">
+                    <span>Skapa gratis konto</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-turquoise/30 text-teal-200">Gratis</span>
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link href="/utbildningar" className="hover:text-brand-turquoise transition-colors">
                   100h Skolyogakonsult
                 </Link>
               </li>
               <li>
-                <Link href="/kunskapsbiblioteket" className="hover:text-brand-turquoise transition-colors">
-                  Kunskapsbiblioteket
+                <Link href="/?malgrupp=skola#malgrupp" className="hover:text-brand-turquoise transition-colors">
+                  För skola & förskola
                 </Link>
               </li>
               <li>
-                <Link href="/shop" className="hover:text-brand-turquoise transition-colors flex items-center gap-1">
-                  <span>Shop</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-brand-pink/30 text-pink-200">Böcker & Kläder</span>
+                <Link href="/?malgrupp=finansiar#malgrupp" className="hover:text-brand-turquoise transition-colors">
+                  För finansiärer & företag
                 </Link>
               </li>
               <li>
