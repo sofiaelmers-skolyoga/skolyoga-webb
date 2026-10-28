@@ -542,6 +542,75 @@ function HomePageContent() {
             </div>
           </section>
 
+          {/* Dedicated 100h-utbildning Section for School Staff */}
+          <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
+            <div className="bg-white rounded-3xl border border-[#E3DFC9] p-8 sm:p-12 shadow-sm overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <div className="lg:col-span-7 space-y-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-pink/25 text-brand-purple text-xs font-bold uppercase tracking-wider">
+                    <Award className="w-3.5 h-3.5" />
+                    <span>Kompetensutveckling • 100 timmar</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl font-bold font-cardo text-brand-dark leading-tight">
+                    Skolyogautbildning 100h – Bli diplomerad Skolyogakonsult
+                  </h2>
+                  <p className="text-sm sm:text-base text-brand-darkGrey leading-relaxed">
+                    För dig som vill ha mer än det kostnadsfria materialet och få djupgående verktyg för att implementera Skolyoga i hela skolan eller förskolan. Utbildningen kombinerar fysiska kurshelger med digitala moduler, neurovetenskap och praktisk metodik (1–5 minuters mikropauser och längre pass).
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div className="p-4 rounded-2xl bg-brand-sand border border-[#E3DFC9] space-y-1">
+                      <div className="font-bold font-cardo text-sm text-brand-dark">
+                        För lärare, förskola & EHT
+                      </div>
+                      <p className="text-xs text-brand-darkGrey leading-relaxed">
+                        Anpassad för pedagoger, elevhälsa och skolledare från förskola till gymnasium.
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-brand-sand border border-[#E3DFC9] space-y-1">
+                      <div className="font-bold font-cardo text-sm text-brand-dark">
+                        Handledning & Implementering
+                      </div>
+                      <p className="text-xs text-brand-darkGrey leading-relaxed">
+                        Efter utbildningen är du behörig att leda arbetet och handleda kollegor på din skola.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 flex flex-wrap items-center gap-4">
+                    <Link
+                      href="/utbildningar"
+                      className="px-7 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm hover:bg-[#781b61] transition-colors shadow-sm flex items-center gap-2"
+                    >
+                      <span>Läs allt om 100h-utbildningen</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <Link
+                      href="/utbildningar/100h/anmalan"
+                      className="px-6 py-3.5 rounded-full bg-brand-sand text-brand-dark border border-[#D5D0BE] font-semibold text-sm hover:bg-[#EBE8DC] transition-colors"
+                    >
+                      Anmäl intresse / Boka plats
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5 flex justify-center">
+                  <div className="relative w-full max-w-md h-72 sm:h-80 rounded-2xl overflow-hidden shadow-lg border border-[#E3DFC9]">
+                    <Image
+                      src="/images/heroes/konsult_utbildning_card.jpg"
+                      alt="Skolyoga 100h konsult- och lärarutbildning"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 40vw"
+                      className="object-cover object-[center_35%] grayscale brightness-[1.06] contrast-[1.05]"
+                    />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
         </div>
       )}
 

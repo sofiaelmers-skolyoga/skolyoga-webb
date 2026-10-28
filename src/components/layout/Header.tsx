@@ -15,18 +15,12 @@ export function Header() {
   const loggedInLinks: Array<{ name: string; href: string }> = [
     { name: "Kunskapsbiblioteket", href: "/kunskapsbiblioteket" },
     { name: "Program", href: "/program" },
-    { name: "Utbildningar (100h)", href: "/utbildningar" },
     { name: "Metoden", href: "/metoden" },
-    { name: "Projekt & Effekt", href: "/projekt" },
     { name: "Om Skolyoga", href: "/om-skolyoga" },
   ];
 
   const loggedOutLinks: Array<{ name: string; href: string }> = [
-    { name: "För skola & förskola", href: "/?malgrupp=skola#malgrupp" },
-    { name: "Utbildningar (100h)", href: "/utbildningar" },
     { name: "Metoden", href: "/metoden" },
-    { name: "För finansiärer & projekt", href: "/projekt" },
-    { name: "Stöd oss", href: "/stod-oss" },
     { name: "Om Skolyoga", href: "/om-skolyoga" },
   ];
 
