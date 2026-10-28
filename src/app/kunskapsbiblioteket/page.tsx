@@ -11,7 +11,7 @@ import { ExerciseCard } from "@/components/exercises/ExerciseCard";
 import { ExerciseFilters } from "@/components/exercises/ExerciseFilters";
 import { VideoPlayerModal } from "@/components/exercises/VideoPlayerModal";
 import { Exercise } from "@/types";
-import { BookOpen, Download, FileText, ExternalLink, Sparkles, Lock, CheckCircle2, Award, ArrowRight } from "lucide-react";
+import { BookOpen, Download, FileText, ExternalLink, Sparkles, Lock, CheckCircle2, Award, ArrowRight, Play } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 import { useAuth } from "@/context/AuthContext";
 import { LoginFormCard } from "@/components/auth/LoginFormCard";
@@ -22,6 +22,7 @@ function KunskapsbibliotekContent() {
   const getParamCategory = () => searchParams.get("kategori") || searchParams.get("category") || "Alla kategorier";
   const getParamTweak = () => searchParams.get("anpassning") || searchParams.get("tag") || "Alla anpassningar";
 
+  const [activeLibraryTab, setActiveLibraryTab] = useState<"digitalt" | "nedladdning">("digitalt");
   const [exercises, setExercises] = useState<Exercise[]>(allExercises);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(getParamCategory());
@@ -33,6 +34,10 @@ function KunskapsbibliotekContent() {
 
   // Sync state if search params change
   useEffect(() => {
+    const flik = searchParams.get("flik") || searchParams.get("tab");
+    if (flik === "nedladdning" || flik === "handledningar" || flik === "pdf") {
+      setActiveLibraryTab("nedladdning");
+    }
     const cat = searchParams.get("kategori") || searchParams.get("category");
     if (cat) setSelectedCategory(cat);
     const tweak = searchParams.get("anpassning") || searchParams.get("tag");
@@ -252,221 +257,273 @@ function KunskapsbibliotekContent() {
       
       {/* Full-bleed Edge-to-Edge Hero Banner with Authentic Classroom Stretching Photo */}
       <PageHero
-        badge={`${exercises.length} digitala övningar för skolan`}
+        badge={`${exercises.length} digitala övningar & handledningar`}
         badgeIcon={<BookOpen className="w-3.5 h-3.5" />}
         title="Skolyogas Kunskapsbibliotek"
-        description="Här hittar du vårt digitala material. Du kan snabbt och enkelt hitta en övning som passar dig och dina elevers behov."
+        description="Välj mellan våra filmade övningar för storskärmen och våra nedladdningsbara PDF-handledningar för klassrummet, förskolan och elevhälsan."
         bgImage="/images/heroes/classroom_stretching.jpg"
         bgAlt="Elever i klassrummet som stretchar och gör yoga"
         align="center"
         objectPosition="object-[center_22%]"
       />
 
-      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-12">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-10">
 
-      {/* Filters */}
-      <ExerciseFilters
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        selectedDuration={selectedDuration}
-        onDurationChange={setSelectedDuration}
-        selectedGrade={selectedGrade}
-        onGradeChange={setSelectedGrade}
-        selectedTweak={selectedTweak}
-        onTweakChange={setSelectedTweak}
-        selectedIntervention={selectedIntervention}
-        onInterventionChange={setSelectedIntervention}
-        onReset={handleReset}
-        totalCount={exercises.length}
-        filteredCount={filteredExercises.length}
-      />
-
-      {/* 6-veckorsinterventioner spotlight banner */}
-      {selectedCategory === "6-veckorsinterventioner" && (
-        <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border border-[#E3DFC9] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm animate-in fade-in">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/15 text-brand-purple text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-brand-purple" />
-              <span>6-veckorsinterventioner för skolan</span>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold font-cardo text-brand-dark">
-              {selectedIntervention === "Alla interventioner"
-                ? "Interventioner: Trygghet, Stresshantering & Studieteknik"
-                : `6-veckorsintervention: ${selectedIntervention}`}
-            </h3>
-            <p className="text-sm text-brand-darkGrey max-w-2xl leading-relaxed">
-              Strukturerade program med handledning och anpassade övningar vecka för vecka. Här visas övningarna kopplade till interventionen. Du kan också öppna hela programmet med lektionsplanering.
-            </p>
-          </div>
-          <Link
-            href="/program"
-            className="px-6 py-3 rounded-full bg-brand-purple text-white font-semibold text-xs sm:text-sm hover:bg-[#781b61] transition-all shrink-0 shadow-sm flex items-center gap-2"
-          >
-            <span>Öppna hela programmet</span>
-            <ExternalLink className="w-4 h-4" />
-          </Link>
-        </div>
-      )}
-
-      {/* Exercises Grid */}
-      {filteredExercises.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredExercises.map((exercise) => (
-            <ExerciseCard
-              key={exercise.id}
-              exercise={exercise}
-              onSelect={(ex) => setSelectedExercise(ex)}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-20 bg-white rounded-3xl border border-[#E3DFC9] p-8 shadow-sm">
-          <div className="w-16 h-16 rounded-full bg-brand-sand text-brand-darkGrey flex items-center justify-center mx-auto mb-4">
-            <BookOpen className="w-8 h-8" />
-          </div>
-          <h3 className="text-xl font-bold font-cardo text-brand-dark mb-2">Inga övningar matchade dina filter</h3>
-          <p className="text-sm text-brand-darkGrey max-w-md mx-auto mb-6">
-            Prova att justera sökord eller nollställa något av filtren för att hitta vad du söker.
-          </p>
+        {/* TOP TABS: Digitalt material (Video) vs Handledningar & PDF att ladda ner */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 border-b border-[#E3DFC9] pb-8">
           <button
-            onClick={handleReset}
-            className="px-6 py-2.5 rounded-full bg-brand-dustyPurple text-white text-sm font-semibold hover:bg-[#781b61] transition-colors shadow-sm"
+            type="button"
+            onClick={() => setActiveLibraryTab("digitalt")}
+            className={`w-full sm:w-auto px-7 py-4 rounded-2xl font-bold text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-3 ${
+              activeLibraryTab === "digitalt"
+                ? "bg-brand-purple text-white shadow-md scale-[1.01]"
+                : "bg-white text-brand-dark border border-[#D5D0BE] hover:bg-brand-sand"
+            }`}
           >
-            Återställ alla filter
+            <Play className={`w-4 h-4 ${activeLibraryTab === "digitalt" ? "fill-white text-white" : "text-brand-purple"}`} />
+            <span>Filmade övningar & mikropauser</span>
+            <span
+              className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                activeLibraryTab === "digitalt"
+                  ? "bg-white/20 text-white"
+                  : "bg-brand-sand text-brand-darkGrey"
+              }`}
+            >
+              {exercises.length} st
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveLibraryTab("nedladdning")}
+            className={`w-full sm:w-auto px-7 py-4 rounded-2xl font-bold text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-3 ${
+              activeLibraryTab === "nedladdning"
+                ? "bg-brand-purple text-white shadow-md scale-[1.01]"
+                : "bg-white text-brand-dark border border-[#D5D0BE] hover:bg-brand-sand"
+            }`}
+          >
+            <Download className={`w-4 h-4 ${activeLibraryTab === "nedladdning" ? "text-white" : "text-brand-turquoise"}`} />
+            <span>Handledningar & PDF att ladda ner</span>
+            <span
+              className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                activeLibraryTab === "nedladdning"
+                  ? "bg-white/20 text-white"
+                  : "bg-brand-sand text-brand-darkGrey"
+              }`}
+            >
+              6 dokument
+            </span>
           </button>
         </div>
-      )}
 
-      {/* UPSELL BANNER FOR LOGGED-IN SCHOOL STAFF: 100h Training & Implementation */}
-      <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border-2 border-brand-purple/25 p-8 sm:p-12 shadow-sm">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-8 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-pink/25 text-brand-purple text-xs font-bold uppercase tracking-wider">
-              <Award className="w-3.5 h-3.5" />
-              <span>Nästa steg för dig och din skola</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-cardo text-brand-dark">
-              Vill du ha mer och få hjälp att implementera övningarna?
-            </h2>
-            <p className="text-sm sm:text-base text-brand-darkGrey leading-relaxed max-w-2xl">
-              När du har börjat använda övningarna i vardagen kan du fördjupa din kunskap genom vår <strong>100h-utbildning till Skolyogakonsult</strong> eller boka en <strong>praktisk workshop</strong> för ditt arbetslag. Då får ni verktygen för att implementera studiero, trygghet och proaktivt hälsoarbete i hela skolan eller förskolan.
-            </p>
-          </div>
-          <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
-            <Link
-              href="/utbildningar"
-              className="px-6 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm hover:bg-[#781b61] transition-all shadow-sm text-center flex items-center justify-center gap-2"
-            >
-              <span>Läs om 100h-utbildningen</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/kontakt"
-              className="px-6 py-3.5 rounded-full bg-white border border-[#D5D0BE] text-brand-dark font-semibold text-sm hover:bg-stone-50 transition-all text-center"
-            >
-              Få hjälp med implementering
-            </Link>
-          </div>
-        </div>
-      </div>
+        {/* TAB 1: DIGITALT MATERIAL (FILMADE ÖVNINGAR) */}
+        {activeLibraryTab === "digitalt" && (
+          <div className="space-y-12 animate-in fade-in duration-200">
+            {/* Filters */}
+            <ExerciseFilters
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+              selectedDuration={selectedDuration}
+              onDurationChange={setSelectedDuration}
+              selectedGrade={selectedGrade}
+              onGradeChange={setSelectedGrade}
+              selectedTweak={selectedTweak}
+              onTweakChange={setSelectedTweak}
+              selectedIntervention={selectedIntervention}
+              onInterventionChange={setSelectedIntervention}
+              onReset={handleReset}
+              totalCount={exercises.length}
+              filteredCount={filteredExercises.length}
+            />
 
-      {/* ANALOGT MATERIAL & HANDLEDNINGAR (PDF) */}
-      <div id="analogt-material" className="mt-16 pt-12 border-t border-[#E3DFC9] space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-dustyTurquoise/20 text-[#1B6465] text-xs font-bold uppercase tracking-wider mb-2">
-              <FileText className="w-3.5 h-3.5" />
-              <span>Analogt material & Dokument</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
-              Nedladdningsbara handledningar & PDF:er
-            </h2>
-            <p className="text-sm text-brand-darkGrey mt-1 max-w-2xl">
-              Skriv ut och ta med till klassrummet, arbetslaget eller elevhälsan. Alla handledningar är kostnadsfria att ladda ner för skolor och pedagoger.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              title: "Lärarhandledning NPF",
-              description: "Metoder, anpassningar och strategier för elever med neuropsykiatriska funktionsnedsättningar.",
-              file: "/documents/Lararhandledning-NPF.pdf",
-              badge: "NPF-anpassning",
-              size: "7.5 MB",
-            },
-            {
-              title: "Lärarhandledning Stress & Oro",
-              description: "Konkreta verktyg och övningar för att lugna ett stressat nervsystem och skapa trygghet.",
-              file: "/documents/Lararhandledning-stress-och-oro.pdf",
-              badge: "Stresshantering",
-              size: "7.3 MB",
-            },
-            {
-              title: "Handledning: Anpassad grundskola",
-              description: "Pedagogiskt anpassat material i fyra nivåer för elever i anpassad skola och träningsskola.",
-              file: "/documents/Anpassat-material-handledning-anpassad-skola.pdf",
-              badge: "Anpassad skola",
-              size: "3.3 MB",
-            },
-            {
-              title: "Skolyoga – Ett evidensbaserat verktyg",
-              description: "Sammanställning av neurovetenskaplig forskning, källor och effekter av skolyoga i skolan.",
-              file: "/documents/Skolyoga-ett-evidensbaserat-verktyg.pdf",
-              badge: "Forskning & Evidens",
-              size: "138 KB",
-            },
-            {
-              title: "Skolyoga Effektrapport",
-              description: "Vetenskaplig utvärdering och resultat från klassrumsstudier och skolenkäter.",
-              file: "/documents/Skolyoga-Effektrapport-2025.pdf",
-              badge: "Utvärdering",
-              size: "13.8 MB",
-            },
-            {
-              title: "Hemmayoga för vårdnadshavare & elever",
-              description: "Kort informationsblad och enkla övningar att använda hemma vid läxläsning och vila.",
-              file: "/documents/Hemmayoga-Kort-info-till-vardnadshavare-och-elever.pdf",
-              badge: "Hem & Skola",
-              size: "1.4 MB",
-            },
-          ].map((doc) => (
-            <div
-              key={doc.title}
-              className="bg-white rounded-2xl border border-[#E3DFC9] p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-brand-sand text-brand-dark border border-[#E3DFC9]">
-                    {doc.badge}
-                  </span>
-                  <span className="text-[11px] text-stone-400 font-medium">{doc.size}</span>
+            {/* 6-veckorsinterventioner spotlight banner */}
+            {selectedCategory === "6-veckorsinterventioner" && (
+              <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border border-[#E3DFC9] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm animate-in fade-in">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/15 text-brand-purple text-xs font-bold uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5 text-brand-purple" />
+                    <span>6-veckorsinterventioner för skolan</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold font-cardo text-brand-dark">
+                    {selectedIntervention === "Alla interventioner"
+                      ? "Interventioner: Trygghet, Stresshantering & Studieteknik"
+                      : `6-veckorsintervention: ${selectedIntervention}`}
+                  </h3>
+                  <p className="text-sm text-brand-darkGrey max-w-2xl leading-relaxed">
+                    Strukturerade program med handledning och anpassade övningar vecka för vecka. Här visas övningarna kopplade till interventionen. Du kan också öppna hela programmet med lektionsplanering.
+                  </p>
                 </div>
-                <h3 className="font-bold font-cardo text-lg text-brand-dark group-hover:text-brand-dustyPurple transition-colors mb-2">
-                  {doc.title}
-                </h3>
-                <p className="text-xs text-brand-darkGrey leading-relaxed mb-6">
-                  {doc.description}
-                </p>
+                <Link
+                  href="/program"
+                  className="px-6 py-3 rounded-full bg-brand-purple text-white font-semibold text-xs sm:text-sm hover:bg-[#781b61] transition-all shrink-0 shadow-sm flex items-center gap-2"
+                >
+                  <span>Öppna hela programmet</span>
+                  <ExternalLink className="w-4 h-4" />
+                </Link>
               </div>
+            )}
 
-              <a
-                href={doc.file}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-brand-sand hover:bg-brand-dustyPurple hover:text-white border border-[#D5D0BE] text-brand-dark text-xs font-semibold transition-all"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Ladda ner PDF</span>
-              </a>
+            {/* Exercises Grid */}
+            {filteredExercises.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredExercises.map((exercise) => (
+                  <ExerciseCard
+                    key={exercise.id}
+                    exercise={exercise}
+                    onSelect={(ex) => setSelectedExercise(ex)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 bg-white rounded-3xl border border-[#E3DFC9] p-8 shadow-sm">
+                <div className="w-16 h-16 rounded-full bg-brand-sand text-brand-darkGrey flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold font-cardo text-brand-dark mb-2">Inga övningar matchade dina filter</h3>
+                <p className="text-sm text-brand-darkGrey max-w-md mx-auto mb-6">
+                  Prova att justera sökord eller nollställa något av filtren för att hitta vad du söker.
+                </p>
+                <button
+                  onClick={handleReset}
+                  className="px-6 py-2.5 rounded-full bg-brand-dustyPurple text-white text-sm font-semibold hover:bg-[#781b61] transition-colors shadow-sm"
+                >
+                  Återställ alla filter
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 2: HANDLEDNINGAR & PDF ATT LADDA NER */}
+        {activeLibraryTab === "nedladdning" && (
+          <div id="analogt-material" className="space-y-8 animate-in fade-in duration-200">
+            <div className="bg-white rounded-3xl border border-[#E3DFC9] p-8 sm:p-10 shadow-sm space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-dustyTurquoise/20 text-[#1B6465] text-xs font-bold uppercase tracking-wider">
+                <FileText className="w-3.5 h-3.5" />
+                <span>Lärarhandledningar & Dokument</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+                Material att ladda ner och skriva ut (PDF)
+              </h2>
+              <p className="text-sm sm:text-base text-brand-darkGrey max-w-3xl leading-relaxed">
+                Skriv ut och ta med till klassrummet, samlingen, arbetslaget eller elevhälsan. Här finns fördjupade handledningar för bland annat NPF, stress och oro, anpassad grundskola samt vår forsknings- och effektrapport.
+              </p>
             </div>
-          ))}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Lärarhandledning NPF",
+                  description: "Metoder, anpassningar och strategier för elever med neuropsykiatriska funktionsnedsättningar.",
+                  file: "/documents/Lararhandledning-NPF.pdf",
+                  badge: "NPF-anpassning",
+                  size: "7.5 MB",
+                },
+                {
+                  title: "Lärarhandledning Stress & Oro",
+                  description: "Konkreta verktyg och övningar för att lugna ett stressat nervsystem och skapa trygghet.",
+                  file: "/documents/Lararhandledning-stress-och-oro.pdf",
+                  badge: "Stresshantering",
+                  size: "7.3 MB",
+                },
+                {
+                  title: "Handledning: Anpassad grundskola",
+                  description: "Pedagogiskt anpassat material i fyra nivåer för elever i anpassad skola och träningsskola.",
+                  file: "/documents/Anpassat-material-handledning-anpassad-skola.pdf",
+                  badge: "Anpassad skola",
+                  size: "3.3 MB",
+                },
+                {
+                  title: "Skolyoga – Ett evidensbaserat verktyg",
+                  description: "Sammanställning av neurovetenskaplig forskning, källor och effekter av skolyoga i skolan.",
+                  file: "/documents/Skolyoga-ett-evidensbaserat-verktyg.pdf",
+                  badge: "Forskning & Evidens",
+                  size: "138 KB",
+                },
+                {
+                  title: "Skolyoga Effektrapport",
+                  description: "Vetenskaplig utvärdering och resultat från klassrumsstudier och skolenkäter.",
+                  file: "/documents/Skolyoga-Effektrapport-2025.pdf",
+                  badge: "Utvärdering",
+                  size: "13.8 MB",
+                },
+                {
+                  title: "Hemmayoga för vårdnadshavare & elever",
+                  description: "Kort informationsblad och enkla övningar att använda hemma vid läxläsning och vila.",
+                  file: "/documents/Hemmayoga-Kort-info-till-vardnadshavare-och-elever.pdf",
+                  badge: "Hem & Skola",
+                  size: "1.4 MB",
+                },
+              ].map((doc) => (
+                <div
+                  key={doc.title}
+                  className="bg-white rounded-2xl border border-[#E3DFC9] p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-brand-sand text-brand-dark border border-[#E3DFC9]">
+                        {doc.badge}
+                      </span>
+                      <span className="text-[11px] text-stone-400 font-medium">{doc.size}</span>
+                    </div>
+                    <h3 className="font-bold font-cardo text-lg text-brand-dark group-hover:text-brand-dustyPurple transition-colors mb-2">
+                      {doc.title}
+                    </h3>
+                    <p className="text-xs text-brand-darkGrey leading-relaxed mb-6">
+                      {doc.description}
+                    </p>
+                  </div>
+
+                  <a
+                    href={doc.file}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-brand-sand hover:bg-brand-dustyPurple hover:text-white border border-[#D5D0BE] text-brand-dark text-xs font-semibold transition-all"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Ladda ner PDF</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* UPSELL BANNER FOR LOGGED-IN SCHOOL STAFF: 100h Training & Implementation */}
+        <div className="bg-gradient-to-r from-brand-sand via-white to-brand-sand rounded-3xl border-2 border-brand-purple/25 p-8 sm:p-12 shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-pink/25 text-brand-purple text-xs font-bold uppercase tracking-wider">
+                <Award className="w-3.5 h-3.5" />
+                <span>Nästa steg för dig och din skola</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-cardo text-brand-dark">
+                Vill du ha mer och få hjälp att implementera övningarna?
+              </h2>
+              <p className="text-sm sm:text-base text-brand-darkGrey leading-relaxed max-w-2xl">
+                När du har börjat använda övningarna i vardagen kan du fördjupa din kunskap genom vår <strong>100h-utbildning till Skolyogakonsult</strong> eller boka en <strong>praktisk workshop</strong> för ditt arbetslag. Då får ni verktygen för att implementera studiero, trygghet och proaktivt hälsoarbete i hela skolan eller förskolan.
+              </p>
+            </div>
+            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
+              <Link
+                href="/utbildningar"
+                className="px-6 py-3.5 rounded-full bg-brand-purple text-white font-semibold text-sm hover:bg-[#781b61] transition-all shadow-sm text-center flex items-center justify-center gap-2"
+              >
+                <span>Läs om 100h-utbildningen</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/kontakt"
+                className="px-6 py-3.5 rounded-full bg-white border border-[#D5D0BE] text-brand-dark font-semibold text-sm hover:bg-stone-50 transition-all text-center"
+              >
+                Få hjälp med implementering
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
 
         {/* Video Modal */}
         <VideoPlayerModal
