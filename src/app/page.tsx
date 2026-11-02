@@ -42,6 +42,17 @@ function HomePageContent() {
   const [schoolRole, setSchoolRole] = useState<SchoolRoleType>("larare");
   const [funderTab, setFunderTab] = useState<FunderTabType>("foretag");
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
+  const [surveyKpi, setSurveyKpi] = useState({
+    totalResponses: 71,
+    totalSurveys: 5,
+    recommendAvg: 4.5,
+    recommendPositivePercent: 92,
+    confidentAvg: 4.2,
+    confidentPositivePercent: 82,
+    relevantAvg: 4.6,
+    relevantPositivePercent: 91,
+    practicalExercisesPercent: 97,
+  });
 
   useEffect(() => {
     const param = searchParams.get("malgrupp");
@@ -51,6 +62,23 @@ function HomePageContent() {
       setAudience("skola");
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    async function loadSurveyKpi() {
+      try {
+        const res = await fetch("/api/impact");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.surveyKpi) {
+            setSurveyKpi((prev) => ({ ...prev, ...json.surveyKpi }));
+          }
+        }
+      } catch {
+        // Fallback already set
+      }
+    }
+    loadSurveyKpi();
+  }, []);
 
   const roleContent: Record<
     SchoolRoleType,
@@ -964,17 +992,17 @@ function HomePageContent() {
       </section>
 
       {/* =====================================================================
-          3. KORT BEVIS & RÖSTER FRÅN SKOLAN (Kompakt & förtroendeskapande för alla)
+          3. KORT BEVIS, LIVE KPI & RÖSTER FRÅN SKOLAN
          ===================================================================== */}
       <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
         <div className="bg-white rounded-3xl border border-[#E3DFC9] p-8 sm:p-12 shadow-sm space-y-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EBE8DC] pb-6">
-            <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-brand-purple mb-1">
-                Dokumenterad effekt i praktiken
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-purple">
+                <span>Dokumenterad effekt i praktiken • Live från våra kundundersökningar ({surveyKpi.totalResponses} svar)</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
-                75 000+ nådda barn och unga • 10 av 10 pedagoger rekommenderar
+                75 000+ nådda barn och unga • {surveyKpi.recommendAvg.toFixed(1).replace(".", ",")} av 5 i snittbetyg
               </h2>
             </div>
             <Link
@@ -984,6 +1012,57 @@ function HomePageContent() {
               <span>Läs mer om forskningen & metoden</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
+          </div>
+
+          {/* 4 Live KPI Cards from Customer Surveys Google Sheet */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-5 rounded-2xl bg-brand-sand/40 border border-[#E3DFC9] space-y-1">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-brand-purple">
+                Rekommendationsgrad
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+                {surveyKpi.recommendAvg.toFixed(1).replace(".", ",")} / 5
+              </div>
+              <p className="text-xs text-brand-darkGrey">
+                {surveyKpi.recommendPositivePercent}% rekommenderar våra utbildningar till kollegor
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-brand-sand/40 border border-[#E3DFC9] space-y-1">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#1B6465]">
+                Psykisk hälsa & relevans
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+                {surveyKpi.relevantAvg.toFixed(1).replace(".", ",")} / 5
+              </div>
+              <p className="text-xs text-brand-darkGrey">
+                {surveyKpi.relevantPositivePercent}% bedömer insatsen som relevant för långsiktigt hälsoarbete
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-brand-sand/40 border border-[#E3DFC9] space-y-1">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-amber-800">
+                Konkreta övningar direkt
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+                {surveyKpi.practicalExercisesPercent}%
+              </div>
+              <p className="text-xs text-brand-darkGrey">
+                Får med sig praktiska övningar att använda direkt i verksamheten
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-brand-sand/40 border border-[#E3DFC9] space-y-1">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-brand-dustyPink">
+                Trygga att börja arbeta
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+                {surveyKpi.confidentAvg.toFixed(1).replace(".", ",")} / 5
+              </div>
+              <p className="text-xs text-brand-darkGrey">
+                {surveyKpi.confidentPositivePercent}% känner sig trygga att direkt leda övningarna i barngruppen
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
