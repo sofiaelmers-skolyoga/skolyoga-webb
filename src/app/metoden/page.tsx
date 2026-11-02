@@ -25,6 +25,7 @@ interface Section {
   subtitle: string;
   badge: string;
   icon: any;
+  symbolSrc?: string;
   color: string;
   content: string[];
   keyPoints: string[];
@@ -37,6 +38,7 @@ const sections: Section[] = [
     subtitle: "Rikta och upprätthålla uppmärksamhet i en värld full av distraktioner",
     badge: "Studieteknik",
     icon: Brain,
+    symbolSrc: "/images/symbols/studieteknik.png",
     color: "brand-purple",
     content: [
       "Ungdomars vardag innehåller ständiga digitala distraktioner och högt tempo. Att rikta uppmärksamheten utåt gör det svårt att behålla sammanhållet fokus vid skolbänken.",
@@ -55,6 +57,7 @@ const sections: Section[] = [
     subtitle: "Förstå kroppens signaler och aktivera lugn-och-ro-systemet",
     badge: "Fysiologi",
     icon: Activity,
+    symbolSrc: "/images/symbols/stresshantering.png",
     color: "brand-pink",
     content: [
       "Stresshantering handlar om att förstå kroppens alarmsystem och ge eleven konkreta verktyg för att självreglera nervsystemet vid oro eller prestationsångest.",
@@ -73,6 +76,7 @@ const sections: Section[] = [
     subtitle: "Känslor, relationer och ett växande tankesätt",
     badge: "Trygghet",
     icon: ShieldCheck,
+    symbolSrc: "/images/symbols/trygghet.png",
     color: "brand-turquoise",
     content: [
       "Trygghet är grunden för allt lärande. Vi ger eleverna redskap att förstå och möta starka känslor utan att döma sig själva.",
@@ -153,13 +157,23 @@ export default function MetodenPage() {
             <button
               key={section.id}
               onClick={() => setActiveTab(section.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 isActive
                   ? "bg-brand-purple text-white shadow-md"
                   : "bg-white text-brand-darkGrey hover:text-brand-dark hover:bg-brand-sand border border-[#E3DFC9]"
               }`}
             >
-              <Icon className="w-4 h-4" />
+              {section.symbolSrc ? (
+                <Image
+                  src={section.symbolSrc}
+                  alt={section.title}
+                  width={18}
+                  height={18}
+                  className="w-4 h-4 object-contain"
+                />
+              ) : (
+                <Icon className="w-4 h-4" />
+              )}
               <span>{section.title}</span>
             </button>
           );
@@ -170,16 +184,29 @@ export default function MetodenPage() {
       <div className="bg-white rounded-3xl border border-[#E3DFC9] p-8 sm:p-12 shadow-sm space-y-8">
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#EBE8DC]">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-sand text-brand-dark text-xs font-semibold mb-2">
-              <span>{activeSection.badge}</span>
+          <div className="flex items-start gap-5">
+            {activeSection.symbolSrc && (
+              <div className="w-16 h-16 rounded-2xl bg-[#6F6F6E] p-3 flex items-center justify-center shrink-0 shadow-xs">
+                <Image
+                  src={activeSection.symbolSrc}
+                  alt={activeSection.title}
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            )}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-sand text-brand-dark text-xs font-semibold mb-2">
+                <span>{activeSection.badge}</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
+                {activeSection.title}
+              </h2>
+              <p className="text-sm sm:text-base text-brand-turquoise font-medium mt-1">
+                {activeSection.subtitle}
+              </p>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-cardo text-brand-dark">
-              {activeSection.title}
-            </h2>
-            <p className="text-sm sm:text-base text-brand-turquoise font-medium mt-1">
-              {activeSection.subtitle}
-            </p>
           </div>
 
           <Link

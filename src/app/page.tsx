@@ -823,6 +823,147 @@ function HomePageContent() {
       )}
 
       {/* =====================================================================
+          LIVSFÖRMÅGOR SECTION - Med Skolyogas egna symbolbilder
+         ===================================================================== */}
+      <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="rounded-3xl bg-[#6F6F6E] text-white p-8 sm:p-12 lg:p-14 shadow-md">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+            
+            {/* Left Intro Column */}
+            <div className="lg:col-span-4 flex flex-col justify-between space-y-6">
+              <div className="space-y-5">
+                <h2 className="text-4xl sm:text-5xl font-bold font-cardo text-[#E29B9D] leading-[1.12]">
+                  Skolyoga tränar Livsförmågor
+                </h2>
+                <p className="text-sm sm:text-base text-white/95 font-cardo leading-relaxed">
+                  Genom att öva Livsförmågor i klassrummet ger vi eleverna färdigheter som både kan användas i klassrummet och i livet för att förbättra studieresultat och relationer.
+                </p>
+              </div>
+              <div className="pt-2">
+                <Link
+                  href="/metoden"
+                  className="inline-flex items-center justify-center px-8 py-3 rounded-full border-2 border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#6F6F6E] transition-all"
+                >
+                  Läs mer
+                </Link>
+              </div>
+            </div>
+
+            {/* Right 3 Cards Grid */}
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
+              
+              {/* Card 1: Studieteknik */}
+              <div className="rounded-2xl bg-[#656564] border border-white/10 p-6 sm:p-7 flex flex-col items-center text-center justify-between space-y-5 shadow-xs">
+                <h3 className="text-2xl font-normal font-cardo text-[#70B9BA]">
+                  Studieteknik
+                </h3>
+                <div className="relative w-28 h-28 flex items-center justify-center">
+                  <Image
+                    src="/images/symbols/studieteknik.png"
+                    alt="Studieteknik – Hjärna"
+                    width={112}
+                    height={112}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="space-y-3 w-full">
+                  <div className="text-sm font-cardo text-[#70B9BA]">
+                    Du lär dig:
+                  </div>
+                  <ul className="space-y-1.5 text-sm font-cardo text-[#70B9BA] text-left inline-block">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#70B9BA] shrink-0" />
+                      <span>Flow & djupfokus</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#70B9BA] shrink-0" />
+                      <span>Rikta fokus</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#70B9BA] shrink-0" />
+                      <span>Upprätthålla fokus</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Card 2: Stresshantering */}
+              <div className="rounded-2xl bg-[#656564] border border-white/10 p-6 sm:p-7 flex flex-col items-center text-center justify-between space-y-5 shadow-xs">
+                <h3 className="text-2xl font-normal font-cardo text-[#FFE271]">
+                  Stresshantering
+                </h3>
+                <div className="relative w-28 h-28 flex items-center justify-center">
+                  <Image
+                    src="/images/symbols/stresshantering.png"
+                    alt="Stresshantering – Hjärta"
+                    width={112}
+                    height={112}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="space-y-3 w-full">
+                  <div className="text-sm font-cardo text-[#FFE271]">
+                    Du lär dig:
+                  </div>
+                  <ul className="space-y-1.5 text-sm font-cardo text-[#FFE271] text-left inline-block">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FFE271] shrink-0" />
+                      <span>Återhämtning</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FFE271] shrink-0" />
+                      <span>Medveten närvaro</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FFE271] shrink-0" />
+                      <span>Reglering</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Card 3: Trygghet */}
+              <div className="rounded-2xl bg-[#656564] border border-white/10 p-6 sm:p-7 flex flex-col items-center text-center justify-between space-y-5 shadow-xs">
+                <h3 className="text-2xl font-normal font-cardo text-[#E29B9D]">
+                  Trygghet
+                </h3>
+                <div className="relative w-28 h-28 flex items-center justify-center">
+                  <Image
+                    src="/images/symbols/trygghet.png"
+                    alt="Trygghet – Träd med rötter"
+                    width={112}
+                    height={112}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="space-y-3 w-full">
+                  <div className="text-sm font-cardo text-[#E29B9D]">
+                    Du lär dig:
+                  </div>
+                  <ul className="space-y-1.5 text-sm font-cardo text-[#E29B9D] text-left inline-block">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#E29B9D] shrink-0" />
+                      <span>Känslohantering</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#E29B9D] shrink-0" />
+                      <span>Växande tankesätt</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#E29B9D] shrink-0" />
+                      <span>Medkänsla</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
           3. KORT BEVIS & RÖSTER FRÅN SKOLAN (Kompakt & förtroendeskapande för alla)
          ===================================================================== */}
       <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
